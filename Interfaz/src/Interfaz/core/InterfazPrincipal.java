@@ -6,6 +6,9 @@
 
 package Interfaz.core;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jhunior
@@ -28,6 +31,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ventanaInicio = new javax.swing.JFrame();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btnAcpetar = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        menuArchivo2 = new javax.swing.JMenu();
+        menuSalir2 = new javax.swing.JMenuItem();
+        menuAyuda2 = new javax.swing.JMenu();
+        itemAyuda2 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuPermisos = new javax.swing.JMenu();
         menuGestionar = new javax.swing.JMenuItem();
@@ -41,11 +56,106 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         menuAyuda = new javax.swing.JMenu();
         itemAyuda = new javax.swing.JMenuItem();
 
+        ventanaInicio.setMinimumSize(new java.awt.Dimension(400, 302));
+        ventanaInicio.setResizable(false);
+
+        jInternalFrame1.setVisible(true);
+
+        jLabel1.setText("Nombre de usuario");
+        jLabel1.setAutoscrolls(true);
+
+        jLabel2.setText("Contraseña");
+
+        btnAcpetar.setText("Aceptar");
+        btnAcpetar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcpetarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(jPasswordField1))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap(69, Short.MAX_VALUE)
+                .addComponent(btnAcpetar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAcpetar)
+                .addGap(27, 27, 27))
+        );
+
+        menuArchivo2.setText("Archivo");
+
+        menuSalir2.setText("Salir");
+        menuSalir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSalir2ActionPerformed(evt);
+            }
+        });
+        menuArchivo2.add(menuSalir2);
+
+        jMenuBar3.add(menuArchivo2);
+
+        menuAyuda2.setText("Ayuda");
+
+        itemAyuda2.setText("Ayuda");
+        itemAyuda2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAyuda2ActionPerformed(evt);
+            }
+        });
+        menuAyuda2.add(itemAyuda2);
+
+        jMenuBar3.add(menuAyuda2);
+
+        ventanaInicio.setJMenuBar(jMenuBar3);
+
+        javax.swing.GroupLayout ventanaInicioLayout = new javax.swing.GroupLayout(ventanaInicio.getContentPane());
+        ventanaInicio.getContentPane().setLayout(ventanaInicioLayout);
+        ventanaInicioLayout.setHorizontalGroup(
+            ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
+        );
+        ventanaInicioLayout.setVerticalGroup(
+            ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aplicacion");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(6);
-        setName("Escritorio"); // NOI18N
+        setName("Escritorio General"); // NOI18N
 
         menuPermisos.setText("Permisos");
 
@@ -118,6 +228,36 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuSalirActionPerformed
 
+    private void menuSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalir2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menuSalir2ActionPerformed
+
+    private void itemAyuda2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAyuda2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemAyuda2ActionPerformed
+
+    private void btnAcpetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpetarActionPerformed
+        try{
+            if(!jTextField1.getText().equals("") && !jPasswordField1.getText().equals("")){
+                if(jTextField1.getText().equals("root") && jPasswordField1.getText().equals("0123456789aÑ")){
+                    this.setVisible(false);
+                    InterfazPrincipal escritorio = new InterfazPrincipal();
+                    escritorio.setExtendedState(MAXIMIZED_BOTH);
+                    escritorio.setVisible(true); 
+                }
+                else{
+
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Campos vacios, por favor ingrese información de logueo");
+            }
+        }
+        catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_btnAcpetarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -149,17 +289,28 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 InterfazPrincipal escritorio = new InterfazPrincipal();
-                escritorio.setExtendedState(MAXIMIZED_BOTH);
-                escritorio.setVisible(true);
+                escritorio.ventanaInicio.setLocationRelativeTo(null);
+                escritorio.ventanaInicio.setVisible(true);
+//                escritorio.ventanaInicio.dispose();
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAcpetar;
     private javax.swing.JMenuItem itemAyuda;
+    private javax.swing.JMenuItem itemAyuda2;
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuArchivo2;
     private javax.swing.JMenu menuAyuda;
+    private javax.swing.JMenu menuAyuda2;
     private javax.swing.JMenu menuConsolidar;
     private javax.swing.JMenu menuConsultas;
     private javax.swing.JMenuItem menuDesconectar;
@@ -167,6 +318,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuInformes;
     private javax.swing.JMenu menuPermisos;
     private javax.swing.JMenuItem menuSalir;
+    private javax.swing.JMenuItem menuSalir2;
     private javax.swing.JMenuItem menuSesion;
+    private javax.swing.JFrame ventanaInicio;
     // End of variables declaration//GEN-END:variables
 }

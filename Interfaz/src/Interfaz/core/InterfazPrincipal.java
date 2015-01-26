@@ -11,8 +11,10 @@ import depro.dao.PrecioDAOImpl;
 import depro.dao.UsuarioDAOImpl;
 import depro.dao.VentaDAOImpl;
 import depro.dao.PuntoVentaDAOImpl;
-import depro.dao.core.DAOManager;
-import depro.gestor.GestorManager;
+import depro.dao.DAOManager;
+import depro.dao.MovimientoDAOImpl;
+import depro.gestorArchivo.GestorManager;
+import depro.modelo.Movimiento;
 import depro.modelo.Plu;
 import depro.modelo.Precio;
 import depro.modelo.PuntoVenta;
@@ -22,21 +24,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.SocketTimeoutException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDialog;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sun.management.FileSystem;
 
 /**
  *
@@ -152,6 +148,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
+        jFrameVerMovimiento = new javax.swing.JFrame();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTableMovimiento = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabelTipoUsuario = new javax.swing.JLabel();
         jLabelTienda = new javax.swing.JLabel();
@@ -168,12 +167,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         menuConsultas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         menuInformes = new javax.swing.JMenu();
         jMenuItemVerTiendas = new javax.swing.JMenuItem();
         jMenuItemVerPlu = new javax.swing.JMenuItem();
         jMenuItemVerVentas = new javax.swing.JMenuItem();
         jMenuItemVerPrecios = new javax.swing.JMenuItem();
+        jMenuItemVerMovimiento = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         itemAyuda = new javax.swing.JMenuItem();
 
@@ -399,7 +398,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jFrameCrearUsuario.getAccessibleContext().setAccessibleParent(jFrameCrearUsuario);
 
-        jDialogConsultas.setMinimumSize(new java.awt.Dimension(334, 235));
+        jDialogConsultas.setMinimumSize(new java.awt.Dimension(520, 210));
+        jDialogConsultas.setPreferredSize(new java.awt.Dimension(520, 210));
 
         jButton3.setText("Consultar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -434,9 +434,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                         .addGap(8, 8, 8)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                     .addGroup(jDialogConsultasLayout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -444,11 +444,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
             .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(74, 74, 74)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(55, 55, 55))
         );
         jDialogConsultasLayout.setVerticalGroup(
             jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,8 +469,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jDialogConsultas.getAccessibleContext().setAccessibleParent(this);
@@ -548,7 +547,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jFrameCapturaPluLayout.setVerticalGroup(
             jFrameCapturaPluLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -560,7 +559,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPlu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(jFrameCapturaPluLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -613,7 +612,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jFrameVerTiendaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jButton8)
                 .addContainerGap())
         );
@@ -662,14 +661,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jFrameVerPluLayout.setHorizontalGroup(
             jFrameVerPluLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrameVerPluLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 28, Short.MAX_VALUE))
         );
         jFrameVerPluLayout.setVerticalGroup(
             jFrameVerPluLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrameVerPluLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
         );
 
         jFrameVerVenta.setMinimumSize(new java.awt.Dimension(460, 320));
@@ -846,7 +845,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addGroup(jFrameCrearTiendaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -897,6 +896,44 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jFileChooser2.setCurrentDirectory(new java.io.File("C:\\"));
             jFileChooser2.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+            jFrameVerMovimiento.setLocationByPlatform(true);
+            jFrameVerMovimiento.setMinimumSize(new java.awt.Dimension(850, 500));
+
+            jTableMovimiento.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "# Transaccion", "Plu", "Precio", "Peso (g)", "Costo", "Fecha", "Hora", "# Escala", "Nombre"
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false, false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
+            jScrollPane5.setViewportView(jTableMovimiento);
+
+            javax.swing.GroupLayout jFrameVerMovimientoLayout = new javax.swing.GroupLayout(jFrameVerMovimiento.getContentPane());
+            jFrameVerMovimiento.getContentPane().setLayout(jFrameVerMovimientoLayout);
+            jFrameVerMovimientoLayout.setHorizontalGroup(
+                jFrameVerMovimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jFrameVerMovimientoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            jFrameVerMovimientoLayout.setVerticalGroup(
+                jFrameVerMovimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jFrameVerMovimientoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
             setTitle("Aplicacion");
@@ -999,14 +1036,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             });
             menuConsultas.add(jMenuItem2);
 
-            jMenuItem3.setText("Ventas por fecha");
-            jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItem3ActionPerformed(evt);
-                }
-            });
-            menuConsultas.add(jMenuItem3);
-
             jMenuBar1.add(menuConsultas);
 
             menuInformes.setText("Informes");
@@ -1042,6 +1071,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 }
             });
             menuInformes.add(jMenuItemVerPrecios);
+
+            jMenuItemVerMovimiento.setText("Ver Movimientos");
+            jMenuItemVerMovimiento.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItemVerMovimientoActionPerformed(evt);
+                }
+            });
+            menuInformes.add(jMenuItemVerMovimiento);
 
             jMenuBar1.add(menuInformes);
 
@@ -1202,8 +1239,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here
         jTextField5.setVisible(true);
         jTextField6.setVisible(false);
-        jDateChooser1.setVisible(false);
-        jDateChooser2.setVisible(false);
         jDialogConsultas.setLocationRelativeTo(null);
         jDialogConsultas.setVisible(true);
         jDialogConsultas.setAlwaysOnTop(true);
@@ -1223,65 +1258,117 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Date rangoB = jDateChooser2.getDate();
         VentaDAOImpl ventaDAOImpl = dAOManager.getVentaDAOImpl();
         PrecioDAOImpl precioDAOImpl = dAOManager.getPrecioDAOImpl();
+        MovimientoDAOImpl movimientoDAOImpl = dAOManager.getMovimientoDAOImpl();
         StringBuilder sb = new StringBuilder();
         if (!numeroPlu.equals("")) {
             try {
-                int plu = Integer.parseInt(numeroPlu);
-                jTextField5.setText("");
-                long totalPeso = ventaDAOImpl.cantidadVendidaPorNumeroPlu(plu);
-                Precio precioPlu = precioDAOImpl.cargarPrecioPorPluYTienda(plu, tiendaUsuario);
-                long plataTotal = totalPeso * precioPlu.getPrecioPorKilo();
-                sb.append("Para el plu # ");
-                sb.append(plu);
-                sb.append(" se obtuvieron los siguientes resultados \n");
-                sb.append("\t Dinero vendido = $ ");
-                sb.append(plataTotal);
-                sb.append("\n\t Cantidad vendida = ");
-                sb.append(totalPeso / 1000);
-                sb.append(" kg.");
+                //Con fecha
+                if (!(rangoA == null)) {
+                    if (rangoB != null) {
+                        rangoB = jDateChooser2.getDate();
+                    } else {
+                        rangoB = new Date();
+                    }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+
+                    int plu = Integer.parseInt(numeroPlu);
+                    jTextField5.setText("");
+                    long totalPeso = ventaDAOImpl.cantidadVendidaPorNumeroPluYFecha(plu, df.format(rangoA), df.format(rangoB));
+                    long plataTotal;
+                    if (tiendaUsuario > 0) {
+                        Precio precioPlu = precioDAOImpl.cargarPrecioPorPluYTienda(plu, tiendaUsuario);
+                        plataTotal = totalPeso * precioPlu.getPrecioPorKilo();
+                    } else {
+                        long precioPlu = precioDAOImpl.cargarPrecioPorPlu(plu);
+                        plataTotal = totalPeso * precioPlu;
+                    }
+                    String nombrePlu = dAOManager.getPluDAOImpl().cargar(plu).getNombreTextual();
+
+                    df.applyPattern("dd MMMM yyyy");
+                    sb.append("Durante ");
+                    sb.append(df.format(rangoA));
+                    sb.append(" y entre ");
+                    sb.append(df.format(rangoB));
+                    sb.append(" se obtuvieron los siguientes resultados \n");
+                    sb.append("Para el plu # ");
+                    sb.append(plu);
+                    sb.append(": ");
+                    sb.append(nombrePlu.trim());
+                    sb.append("\t Dinero vendido = $ ");
+                    sb.append(plataTotal / 1000);
+                    sb.append("\n\t Cantidad vendida = ");
+                    sb.append(totalPeso / 1000);
+                    sb.append(" kg.");
+                } else {
+                    //Sin fecha
+                    int plu = Integer.parseInt(numeroPlu);
+                    jTextField5.setText("");
+                    long totalPeso = ventaDAOImpl.cantidadVendidaPorNumeroPlu(plu);
+                    long plataTotal;
+                    if (tiendaUsuario > 0) {
+                        Precio precioPlu = precioDAOImpl.cargarPrecioPorPluYTienda(plu, tiendaUsuario);
+                        plataTotal = totalPeso * precioPlu.getPrecioPorKilo();
+                    } else {
+                        long precioPlu = precioDAOImpl.cargarPrecioPorPlu(plu);
+                        plataTotal = totalPeso * precioPlu;
+                    }
+                    String nombrePlu = dAOManager.getPluDAOImpl().cargar(plu).getNombreTextual();
+                    sb.append("Para el plu # ");
+                    sb.append(plu);
+                    sb.append(": ");
+                    sb.append(nombrePlu.trim());
+                    sb.append(" se obtuvieron los siguientes resultados \n");
+                    sb.append("\t Dinero vendido = $ ");
+                    sb.append(plataTotal / 1000);
+                    sb.append("\n\t Cantidad vendida = ");
+                    sb.append(totalPeso / 1000);
+                    sb.append(" kg.");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Dato ingresado inválido", "", JOptionPane.ERROR_MESSAGE);
             }
         }
         if (!numeroEscala.equals("")) {
             try {
-                int escala = Integer.parseInt(numeroEscala);
-                jTextField6.setText("");
-                long totalPeso = ventaDAOImpl.cantidadVendidaPorNumeroEscala(escala);
-                long plataTotal = 0;
-                sb.append("Para la escala # ");
-                sb.append(escala);
-                sb.append(" se obtuvieron los siguientes resultados \n");
-                sb.append("\t Dinero vendido = $ ");
-                sb.append(plataTotal);
-                sb.append("\n\t Cantidad vendida = ");
-                sb.append(totalPeso / 1000);
-                sb.append(" kg.");
+                //Con fecha
+                if (!(rangoA == null)) {
+                    if (rangoB != null) {
+                        rangoB = jDateChooser2.getDate();
+                    } else {
+                        rangoB = new Date();
+                    }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                    int escala = Integer.parseInt(numeroEscala);
+                    jTextField6.setText("");
+                    long plataTotal = movimientoDAOImpl.plataObtenidaPorNumeroEscalaYFecha(escala, df.format(rangoA), df.format(rangoB));
+                    df.applyPattern("dd MMMM yyyy");
+                    sb.append("Durante ");
+                    sb.append(df.format(rangoA));
+                    sb.append(" y entre ");
+                    sb.append(df.format(rangoB));
+                    sb.append(". Para la escala # ");
+                    sb.append(escala);
+                    sb.append(" se obtuvieron los siguientes resultados \n");
+                    sb.append("\t Dinero vendido = $ ");
+                    sb.append(plataTotal);
+                } else {
+                    //Sin fecha
+                    int escala = Integer.parseInt(numeroEscala);
+                    jTextField6.setText("");
+                    long plataTotal = movimientoDAOImpl.plataObtenidaPorNumeroEscala(escala);
+                    sb.append("Para la escala # ");
+                    sb.append(escala);
+                    sb.append(" se obtuvieron los siguientes resultados \n");
+                    sb.append("\t Dinero vendido = $ ");
+                    sb.append(plataTotal);
+                }
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Dato ingresado inválido", "", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if (!(rangoA == null)) {
-            if (rangoB != null) {
-                rangoB = jDateChooser2.getDate();
-            } else {
-                rangoB = new Date();
-            }
-            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-            long totalPeso = ventaDAOImpl.cantidadVendidaPorRangoFecha(df.format(rangoA), df.format(rangoB));
-            long plataTotal = ventaDAOImpl.plataObtenidaPorRangoFecha(df.format(rangoA), df.format(rangoB));
-            df.applyPattern("dd MMMM yyyy");
-            sb.append("Durante ");
-            sb.append(df.format(rangoA));
-            sb.append(" y entre ");
-            sb.append(df.format(rangoB));
-            sb.append(" se obtuvieron los siguientes resultados \n");
-            sb.append("\t Dinero vendido = $ ");
-            sb.append(plataTotal);
-            sb.append("\n\t Cantidad vendida = ");
-            sb.append(totalPeso / 1000);
-            sb.append(" kg.");
-        }
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
         jDialogConsultas.setAlwaysOnTop(false);
         jDialogConsultas.dispose();
         if (sb.length() != 0) {
@@ -1289,23 +1376,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        jDateChooser1.setVisible(true);
-        jDateChooser2.setVisible(true);
-        jTextField5.setVisible(false);
-        jTextField6.setVisible(false);
-        jDialogConsultas.setLocationRelativeTo(null);
-        jDialogConsultas.setVisible(true);
-        jDialogConsultas.setAlwaysOnTop(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         jTextField6.setVisible(true);
         jTextField5.setVisible(false);
-        jDateChooser1.setVisible(false);
-        jDateChooser2.setVisible(false);
         jDialogConsultas.setLocationRelativeTo(null);
         jDialogConsultas.setVisible(true);
         jDialogConsultas.setAlwaysOnTop(true);
@@ -1313,7 +1387,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        jFileChooser1.setCurrentDirectory(new File(directorioUsuario));
+//        jFileChooser1.setCurrentDirectory(new File(directorioUsuario));
         if (jFileChooser1.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
             jTextFieldPlu.setText(jFileChooser1.getSelectedFile().getPath());
         }
@@ -1526,6 +1600,31 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jMenuItemVerMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerMovimientoActionPerformed
+        // TODO add your handling code here:
+        MovimientoDAOImpl pvdaoi = dAOManager.getMovimientoDAOImpl();
+        List<Movimiento> lista = pvdaoi.listar();
+        pvdaoi.cerrarSession();
+        DefaultTableModel model = (DefaultTableModel) jTableMovimiento.getModel();
+        model.setNumRows(0);
+        for (int i = 0; i < lista.size(); i++) {
+            Object[] fila = new Object[9];
+            fila[0] = lista.get(i).getIdMovimiento();
+            fila[1] = lista.get(i).getPlu();
+            fila[2] = lista.get(i).getPrecioKilo();
+            fila[3] = lista.get(i).getPesoVenta();
+            fila[4] = lista.get(i).getPrecioVenta();
+            fila[5] = lista.get(i).getFecha();
+            fila[6] = lista.get(i).getHora();
+            fila[7] = lista.get(i).getEscala();
+            fila[8] = lista.get(i).getNombre().trim();
+            model.addRow(fila);
+        }
+        jTableMovimiento.setVisible(true);
+        jFrameVerMovimiento.setVisible(true);
+        jFrameVerMovimiento.setLocationRelativeTo(this);
+    }//GEN-LAST:event_jMenuItemVerMovimientoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1622,6 +1721,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JFrame jFrameCapturaPlu;
     private javax.swing.JFrame jFrameCrearTienda;
     private javax.swing.JFrame jFrameCrearUsuario;
+    private javax.swing.JFrame jFrameVerMovimiento;
     private javax.swing.JFrame jFrameVerPlu;
     private javax.swing.JFrame jFrameVerPrecios;
     private javax.swing.JFrame jFrameVerTienda;
@@ -1655,9 +1755,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuImportar;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItemCapturarPlu;
     private javax.swing.JMenuItem jMenuItemRegistrarPuntoVenta;
+    private javax.swing.JMenuItem jMenuItemVerMovimiento;
     private javax.swing.JMenuItem jMenuItemVerPlu;
     private javax.swing.JMenuItem jMenuItemVerPrecios;
     private javax.swing.JMenuItem jMenuItemVerTiendas;
@@ -1672,6 +1772,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable jTableMovimiento;
     private javax.swing.JTable jTablePlu;
     private javax.swing.JTable jTablePrecio;
     private javax.swing.JTable jTableTienda;

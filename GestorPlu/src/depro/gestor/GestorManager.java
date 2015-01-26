@@ -6,14 +6,8 @@
 
 package depro.gestor;
 
-import depro.dao.PluDAOImpl;
-import depro.dao.PuntoVentaDAOImpl;
-import depro.dao.VentaDAOImpl;
 import depro.dao.core.DAOManager;
-import depro.modelo.PuntoVenta;
-import depro.modelo.Venta;
 import java.io.IOException;
-import java.util.List;
 
 /**
  *

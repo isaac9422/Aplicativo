@@ -21,16 +21,20 @@ public class PrecioDAOImpl extends HibernateDAOImpl<Precio, Integer> {
     public PrecioDAOImpl() {
         super(Precio.class);
     }
-    
-    public Precio cargarPrecioPorPluYTienda(int idPlu, int idPuntoVenta){
+
+    public Precio cargarPrecioPorPluYTienda(int idPlu, int idPuntoVenta) {
         Plu plu = new Plu();
         plu.setIdPlu(idPlu);
         PuntoVenta tienda = new PuntoVenta();
         tienda.setIdPuntoVenta(idPuntoVenta);
         return findByAttributes(Restrictions.and(Restrictions.eq("plu", plu), Restrictions.eq("puntoVenta", tienda)));
     }
-    
-    public List<Precio> listarTodo(){
-        return findByCriteria(Restrictions.ge("precioPorKilo", 0));
+
+    public List<Precio> listarTodo(int tienda) {
+        if (tienda < 1) {
+            return findByCriteria(Restrictions.ge("precioPorKilo", 0));
+        } else {
+            return findByCriteria(Restrictions.and(Restrictions.ge("precioPorKilo", 0), Restrictions.ge("puntoVenta", tienda)));
+        }
     }
 }

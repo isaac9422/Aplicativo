@@ -11,7 +11,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.current_session_context_class">thread</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>
@@ -25,8 +25,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
                 <value>depro.modelo.PuntoVenta</value>
                 <value>depro.modelo.Venta</value>
                 <value>depro.modelo.Usuario</value>
-				<value>depro.modelo.Plu</value>				
-				<value>depro.modelo.Precio</value>
+                <value>depro.modelo.Plu</value>				
+                <value>depro.modelo.Precio</value>
             </list>
         </property>
     </bean>

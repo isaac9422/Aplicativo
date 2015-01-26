@@ -34,6 +34,7 @@ public class PuntoVenta implements Serializable {
     private List<Precio> preciosTienda;
     private String telefono;
     private String celular;
+    private String directorioDefecto;
 
     /**
      * @return the idPuntoVenta
@@ -170,6 +171,20 @@ public class PuntoVenta implements Serializable {
      */
     public void setCelular(String celular) {
         this.celular = celular;
+    }
+
+    /**
+     * @return the directorioDefecto
+     */
+    public String getDirectorioDefecto() {
+        return directorioDefecto;
+    }
+
+    /**
+     * @param directorioDefecto the directorioDefecto to set
+     */
+    public void setDirectorioDefecto(String directorioDefecto) {
+        this.directorioDefecto = directorioDefecto;
     }
     
 }

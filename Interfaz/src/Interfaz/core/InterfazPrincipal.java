@@ -1269,7 +1269,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     } else {
                         rangoB = new Date();
                     }
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy/dd/MM");
 
                     int plu = Integer.parseInt(numeroPlu);
                     jTextField5.setText("");
@@ -1337,7 +1337,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     } else {
                         rangoB = new Date();
                     }
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy/dd/MM");
                     int escala = Integer.parseInt(numeroEscala);
                     jTextField6.setText("");
                     long plataTotal = movimientoDAOImpl.plataObtenidaPorNumeroEscalaYFecha(escala, df.format(rangoA), df.format(rangoB));
@@ -1663,7 +1663,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             while ((s = br.readLine()) != null) {
                 s = s.trim();
                 if (!s.equals("")) {
-                    if (s.equalsIgnoreCase("SQL Server (QUALITY)")) {
+                    if (s.contains("SQL Server")) {
                         stateConnection++;
                     }
                 }
@@ -1689,7 +1689,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     escritorio.ventanaInicio.setVisible(true);
                     escritorio.setEnabled(false);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "No se pudo realizar la conexión, revisa la configuración del sistema", "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se pudo realizar la conexión, revisa la configuración del sistema :"+stateConnection, "", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });

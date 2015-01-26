@@ -23,3 +23,9 @@ hs_err_pid*
 /DAO/dist/
 /DAO/build/
 /GestorPlu/dist/
+/GestorArchivo/nbproject/private/
+/GestorArchivo/build/
+/DAOImpl/nbproject/private/
+/DAOImpl/build/
+/DAOImpl/dist/
+/GestorArchivo/dist/

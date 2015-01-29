@@ -7,5 +7,6 @@
             <file>file:/D:/Proyecto/Carnes/DAOImpl/src/depro/dao/PrecioDAOImpl.java</file>
             <file>file:/D:/Proyecto/Carnes/DAOImpl/config/database/DataSource.xml</file>
         </group>
+        <group name="ISA"/>
     </open-files>
 </project-private>

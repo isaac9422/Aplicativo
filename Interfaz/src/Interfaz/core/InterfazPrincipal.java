@@ -31,8 +31,16 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -151,6 +159,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jFrameVerMovimiento = new javax.swing.JFrame();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableMovimiento = new javax.swing.JTable();
+        jMenu1 = new javax.swing.JMenu();
+        jDialogCargaCrearReporte = new javax.swing.JDialog();
+        jLabel22 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel2 = new javax.swing.JPanel();
         jLabelTipoUsuario = new javax.swing.JLabel();
         jLabelTienda = new javax.swing.JLabel();
@@ -167,12 +179,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         menuConsultas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        menuInformes = new javax.swing.JMenu();
+        jMenuVista = new javax.swing.JMenu();
         jMenuItemVerTiendas = new javax.swing.JMenuItem();
         jMenuItemVerPlu = new javax.swing.JMenuItem();
         jMenuItemVerVentas = new javax.swing.JMenuItem();
         jMenuItemVerPrecios = new javax.swing.JMenuItem();
         jMenuItemVerMovimiento = new javax.swing.JMenuItem();
+        jMenuReporte = new javax.swing.JMenu();
+        jMenuItemReportePlu = new javax.swing.JMenuItem();
+        jMenuItemReporteFecha = new javax.swing.JMenuItem();
+        jMenuItemReporteEscala = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         itemAyuda = new javax.swing.JMenuItem();
 
@@ -467,9 +483,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jDialogConsultas.getAccessibleContext().setAccessibleParent(this);
@@ -570,7 +587,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jFrameVerTienda.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jFrameVerTienda.setMinimumSize(new java.awt.Dimension(530, 240));
-        jFrameVerTienda.setPreferredSize(new java.awt.Dimension(530, 240));
 
         jTableTienda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -775,7 +791,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         );
 
         jFrameCrearTienda.setMinimumSize(new java.awt.Dimension(270, 350));
-        jFrameCrearTienda.setPreferredSize(new java.awt.Dimension(270, 350));
 
         jButton10.setText("Aceptar");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -935,6 +950,41 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addContainerGap())
             );
 
+            jMenu1.setText("jMenu1");
+
+            jDialogCargaCrearReporte.setMinimumSize(new java.awt.Dimension(460, 170));
+
+            jLabel22.setText("Creando reporte seleccionado, espere mientras se genera");
+
+            jProgressBar1.setToolTipText("Espere por favor....");
+            jProgressBar1.setIndeterminate(true);
+            jProgressBar1.setString("Espere por favor....");
+            jProgressBar1.setStringPainted(true);
+
+            javax.swing.GroupLayout jDialogCargaCrearReporteLayout = new javax.swing.GroupLayout(jDialogCargaCrearReporte.getContentPane());
+            jDialogCargaCrearReporte.getContentPane().setLayout(jDialogCargaCrearReporteLayout);
+            jDialogCargaCrearReporteLayout.setHorizontalGroup(
+                jDialogCargaCrearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialogCargaCrearReporteLayout.createSequentialGroup()
+                    .addGroup(jDialogCargaCrearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jDialogCargaCrearReporteLayout.createSequentialGroup()
+                            .addGap(91, 91, 91)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jDialogCargaCrearReporteLayout.createSequentialGroup()
+                            .addGap(47, 47, 47)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(31, Short.MAX_VALUE))
+            );
+            jDialogCargaCrearReporteLayout.setVerticalGroup(
+                jDialogCargaCrearReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialogCargaCrearReporteLayout.createSequentialGroup()
+                    .addGap(40, 40, 40)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(29, 29, 29)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(38, Short.MAX_VALUE))
+            );
+
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
             setTitle("Aplicacion");
             setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1038,7 +1088,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             jMenuBar1.add(menuConsultas);
 
-            menuInformes.setText("Informes");
+            jMenuVista.setText("Vistas");
 
             jMenuItemVerTiendas.setText("Ver Puntos de ventas");
             jMenuItemVerTiendas.addActionListener(new java.awt.event.ActionListener() {
@@ -1046,7 +1096,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     jMenuItemVerTiendasActionPerformed(evt);
                 }
             });
-            menuInformes.add(jMenuItemVerTiendas);
+            jMenuVista.add(jMenuItemVerTiendas);
 
             jMenuItemVerPlu.setText("Ver Plus");
             jMenuItemVerPlu.addActionListener(new java.awt.event.ActionListener() {
@@ -1054,7 +1104,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     jMenuItemVerPluActionPerformed(evt);
                 }
             });
-            menuInformes.add(jMenuItemVerPlu);
+            jMenuVista.add(jMenuItemVerPlu);
 
             jMenuItemVerVentas.setText("Ver Ventas");
             jMenuItemVerVentas.addActionListener(new java.awt.event.ActionListener() {
@@ -1062,7 +1112,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     jMenuItemVerVentasActionPerformed(evt);
                 }
             });
-            menuInformes.add(jMenuItemVerVentas);
+            jMenuVista.add(jMenuItemVerVentas);
 
             jMenuItemVerPrecios.setText("Ver Precios");
             jMenuItemVerPrecios.addActionListener(new java.awt.event.ActionListener() {
@@ -1070,7 +1120,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     jMenuItemVerPreciosActionPerformed(evt);
                 }
             });
-            menuInformes.add(jMenuItemVerPrecios);
+            jMenuVista.add(jMenuItemVerPrecios);
 
             jMenuItemVerMovimiento.setText("Ver Movimientos");
             jMenuItemVerMovimiento.addActionListener(new java.awt.event.ActionListener() {
@@ -1078,9 +1128,37 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     jMenuItemVerMovimientoActionPerformed(evt);
                 }
             });
-            menuInformes.add(jMenuItemVerMovimiento);
+            jMenuVista.add(jMenuItemVerMovimiento);
 
-            jMenuBar1.add(menuInformes);
+            jMenuBar1.add(jMenuVista);
+
+            jMenuReporte.setText("Reportes");
+
+            jMenuItemReportePlu.setText("Plu");
+            jMenuItemReportePlu.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItemReportePluActionPerformed(evt);
+                }
+            });
+            jMenuReporte.add(jMenuItemReportePlu);
+
+            jMenuItemReporteFecha.setText("Fecha");
+            jMenuItemReporteFecha.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItemReporteFechaActionPerformed(evt);
+                }
+            });
+            jMenuReporte.add(jMenuItemReporteFecha);
+
+            jMenuItemReporteEscala.setText("Escala");
+            jMenuItemReporteEscala.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItemReporteEscalaActionPerformed(evt);
+                }
+            });
+            jMenuReporte.add(jMenuItemReporteEscala);
+
+            jMenuBar1.add(jMenuReporte);
 
             menuAyuda.setText("Ayuda");
 
@@ -1625,6 +1703,108 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jFrameVerMovimiento.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenuItemVerMovimientoActionPerformed
 
+    private void jMenuItemReporteEscalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReporteEscalaActionPerformed
+        // TODO add your handling code here:
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    jDialogCargaCrearReporte.setLocationRelativeTo(null);
+                    jDialogCargaCrearReporte.setVisible(true);
+                    // TODO add your handling code here:
+                    File f = new File("report3.jasper");
+                    JasperReport reporte = (JasperReport) JRLoader.loadObject(f);
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, dAOManager.getMovimientoDAOImpl().getCurrentSession().connection());
+                    
+//                    Exports the reports in any formats
+//                    JRExporter exporter = new JRPdfExporter();
+//                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+//                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reportePuntoVenta.pdf"));
+//                    exporter.exportReport();
+                    jDialogCargaCrearReporte.dispose();
+                    JOptionPane.showMessageDialog(null, "Reporte generado exitosamente", "", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    JasperViewer visor = new JasperViewer(jasperPrint,false);
+                    visor.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                    visor.setVisible(true);
+                    
+                } catch (JRException ex) {
+                    JOptionPane.showMessageDialog(null, "No ha sido posible generar el reporte", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        thread.start();
+
+    }//GEN-LAST:event_jMenuItemReporteEscalaActionPerformed
+
+    private void jMenuItemReportePluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportePluActionPerformed
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    jDialogCargaCrearReporte.setLocationRelativeTo(null);
+                    jDialogCargaCrearReporte.setVisible(true);
+                    // TODO add your handling code here:
+                    File f = new File("report4.jasper");
+                    JasperReport reporte = (JasperReport) JRLoader.loadObject(f);
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, dAOManager.getMovimientoDAOImpl().getCurrentSession().connection());
+
+                    
+//                    Exports the reports in any formats
+//                    JRExporter exporter = new JRPdfExporter();
+//                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+//                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reportePuntoVenta.pdf"));
+//                    exporter.exportReport();
+                    jDialogCargaCrearReporte.dispose();
+                    JOptionPane.showMessageDialog(null, "Reporte generado exitosamente", "", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    JasperViewer visor = new JasperViewer(jasperPrint,false);
+                    visor.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                    visor.setVisible(true);
+                } catch (JRException ex) {
+                    JOptionPane.showMessageDialog(null, "No ha sido posible generar el reporte", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        thread.start();
+    }//GEN-LAST:event_jMenuItemReportePluActionPerformed
+
+    private void jMenuItemReporteFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReporteFechaActionPerformed
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    jDialogCargaCrearReporte.setLocationRelativeTo(null);
+                    jDialogCargaCrearReporte.setVisible(true);
+                    // TODO add your handling code here:
+                    File f = new File("report2.jasper");
+                    JasperReport reporte = (JasperReport) JRLoader.loadObject(f);
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, dAOManager.getMovimientoDAOImpl().getCurrentSession().connection());
+
+                    
+//                    Exports the reports in any formats
+//                    JRExporter exporter = new JRPdfExporter();
+//                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+//                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reportePuntoVenta.pdf"));
+//                    exporter.exportReport();
+                    jDialogCargaCrearReporte.dispose();
+                    JOptionPane.showMessageDialog(null, "Reporte generado exitosamente", "", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    JasperViewer visor = new JasperViewer(jasperPrint,false);
+                    visor.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                    visor.setVisible(true);
+                    
+                } catch (JRException ex) {
+                    JOptionPane.showMessageDialog(null, "No ha sido posible generar el reporte", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        thread.start();
+    }//GEN-LAST:event_jMenuItemReporteFechaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1689,7 +1869,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     escritorio.ventanaInicio.setVisible(true);
                     escritorio.setEnabled(false);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "No se pudo realizar la conexión, revisa la configuración del sistema :"+stateConnection, "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se pudo realizar la conexión, revisa la configuración del sistema :" + stateConnection, "", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -1715,6 +1895,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JDialog jDialogCargaCrearReporte;
     private javax.swing.JDialog jDialogConsultas;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
@@ -1741,6 +1922,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1750,6 +1932,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelTienda;
     private javax.swing.JLabel jLabelTipoUsuario;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenu jMenuImportar;
@@ -1757,16 +1940,22 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemCapturarPlu;
     private javax.swing.JMenuItem jMenuItemRegistrarPuntoVenta;
+    private javax.swing.JMenuItem jMenuItemReporteEscala;
+    private javax.swing.JMenuItem jMenuItemReporteFecha;
+    private javax.swing.JMenuItem jMenuItemReportePlu;
     private javax.swing.JMenuItem jMenuItemVerMovimiento;
     private javax.swing.JMenuItem jMenuItemVerPlu;
     private javax.swing.JMenuItem jMenuItemVerPrecios;
     private javax.swing.JMenuItem jMenuItemVerTiendas;
     private javax.swing.JMenuItem jMenuItemVerVentas;
+    private javax.swing.JMenu jMenuReporte;
+    private javax.swing.JMenu jMenuVista;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1799,7 +1988,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuConsultas;
     private javax.swing.JMenuItem menuCrearUsuario;
     private javax.swing.JMenu menuHerramientas;
-    private javax.swing.JMenu menuInformes;
     private javax.swing.JMenuItem menuSalir;
     private javax.swing.JMenuItem menuSalir2;
     private javax.swing.JMenuItem menuSesion;

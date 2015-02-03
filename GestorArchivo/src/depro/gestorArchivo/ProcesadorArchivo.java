@@ -17,13 +17,10 @@ import depro.modelo.Precio;
 import depro.modelo.PuntoVenta;
 import depro.modelo.Venta;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -48,7 +45,7 @@ public class ProcesadorArchivo {
         this.puntoVentas = new ArrayList<>();
     }
 
-    public void ProcesarArchivo(String ruta) throws FileNotFoundException, IOException {
+    public void ProcesarArchivo(String ruta) throws IOException, Exception, NumberFormatException {
         BufferedReader br = new BufferedReader(new FileReader(ruta));
         String linea;
         VentaDAOImpl ventaDAOImpl = dAOManager.getVentaDAOImpl();
@@ -177,7 +174,7 @@ public class ProcesadorArchivo {
             }
             ventas.add(venta);
             precios.add(precio);
-            movimientoDAOImpl.guardar(movimiento);
+            movimientoDAOImpl.getCurrentSession().saveOrUpdate(movimiento);
         }
         movimientoDAOImpl.commit();
         movimientoDAOImpl.cerrarSession();
@@ -207,8 +204,7 @@ public class ProcesadorArchivo {
             if (va == null) {
                 ventaDAOImpl.guardar(v);
             } else {
-                v.setIdVenta(v.getIdVenta()+9999);
-                ventaDAOImpl.guardar(v);
+                ventaDAOImpl.actualizar(va);
             }
         }
         ventaDAOImpl.commit();

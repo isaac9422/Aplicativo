@@ -7,6 +7,7 @@
 package depro.dao;
 
 import depro.modelo.Usuario;
+import java.util.List;
 
 
 /**
@@ -30,5 +31,9 @@ public class UsuarioDAOImpl extends HibernateDAOImpl<Usuario, Integer> {
     public Usuario buscarPorNombreUsuarioYContrasena(String nombreUsuario, String pass){
         String hql = "FROM Usuario WHERE nombreUsuario = '"+nombreUsuario+"' AND pass = '"+pass+"'";
         return (Usuario) getCurrentSession().createQuery(hql).uniqueResult();
+    }
+
+    public List<String> listarNombreUsuarios() {
+        return getCurrentSession().createSQLQuery("select distinct nombreUsuario from Usuario").list();
     }
 }

@@ -13,11 +13,11 @@ hs_err_pid*
 /Interfaz/nbproject/
 /Modelo/nbproject/
 /Interfaz/dist/
-/DAOImpl/nbproject/
+/Dao/nbproject/private/
 /Modelo/build/
 /Modelo/dist/
 /Main/nbproject/private/
-/GestorArchivo/nbproject/
+/GestorPlu/nbproject/private/
 /DAO/nbproject/private/
 /GestorPlu/build/
 /DAO/dist/

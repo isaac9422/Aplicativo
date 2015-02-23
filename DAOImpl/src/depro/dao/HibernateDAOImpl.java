@@ -168,5 +168,10 @@ public class HibernateDAOImpl<T, ID extends Serializable> implements
 		}
 		return (T) crit.uniqueResult();
 	}
+        
+        public void cambiarBaseDatos(int bd){
+            String s = "use T"+bd;
+            getCurrentSession().createSQLQuery(s).executeUpdate();
+        }
 
 }

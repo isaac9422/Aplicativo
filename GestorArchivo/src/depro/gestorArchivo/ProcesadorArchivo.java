@@ -69,7 +69,6 @@ public class ProcesadorArchivo {
             int minuto;
             int numeroColumna = 0;
             boolean crearPlu = false;
-            boolean crearPuntoVenta = false;
             while (token.hasMoreTokens()) {
                 numeroColumna++;
                 String campo = token.nextToken();
@@ -77,9 +76,9 @@ public class ProcesadorArchivo {
                     case 1:
                         int idTrans = Integer.parseInt(campo);
                         Movimiento m = movimientoDAOImpl.cargar(idTrans);
-                        if(m!=null){
-                            movimiento.setIdMovimiento(idTrans+9999);
-                        }else{
+                        if (m == null) {
+                            movimiento.setIdMovimiento(idTrans);
+                        } else {
                             movimiento.setIdMovimiento(idTrans);
                         }
                         venta.setIdVenta(idTrans);
@@ -127,18 +126,37 @@ public class ProcesadorArchivo {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd hh:mm");
                         sdf.format(d);
                         venta.setFecha(d);
-                        movimiento.setHora((hora*100)+minuto);
+                        movimiento.setHora((hora * 100) + minuto);
                         break;
+//                    Case para cuando se va a leer la escala desde archivo    
+//                    case 12:
+//                        int idPuntoVenta = Integer.parseInt(campo);
+//                        movimiento.setEscala(idPuntoVenta);
+//                        PuntoVenta pv = puntoVentaDAOImpl.cargar(idPuntoVenta);
+//                        if (pv != null) {
+//                            precio.setPuntoVenta(pv);
+//                            venta.setPuntoVenta(pv);
+//                        } else {
+//                            puntoVenta.setIdPuntoVenta(idPuntoVenta);
+//                            precio.setPuntoVenta(puntoVenta);
+//                            venta.setPuntoVenta(puntoVenta);
+//                            puntoVentas.add(puntoVenta);
+//                        }
+//                        break;
+//                      Case para asociar la información capturada con la escala de la sesión actual  
                     case 12:
-                        int idPuntoVenta = Integer.parseInt(campo);
+                        int idPuntoVenta = GestorManager.tienda;
                         movimiento.setEscala(idPuntoVenta);
                         PuntoVenta pv = puntoVentaDAOImpl.cargar(idPuntoVenta);
                         if (pv != null) {
+                            puntoVenta.setIdPuntoVenta(idPuntoVenta);
                             precio.setPuntoVenta(pv);
                             venta.setPuntoVenta(pv);
                         } else {
                             puntoVenta.setIdPuntoVenta(idPuntoVenta);
-                            crearPuntoVenta = true;
+                            precio.setPuntoVenta(puntoVenta);
+                            venta.setPuntoVenta(puntoVenta);
+                            puntoVentas.add(puntoVenta);
                         }
                         break;
                     case 15:
@@ -162,31 +180,51 @@ public class ProcesadorArchivo {
                         break;
                 }
             }
-            if (crearPuntoVenta) {
-                puntoVentas.add(puntoVenta);
-                venta.setPuntoVenta(puntoVenta);
-                precio.setPuntoVenta(puntoVenta);
+            if (puntoVenta.getIdPuntoVenta() > 50 && puntoVenta.getIdPuntoVenta() < 99
+                    && GestorManager.tienda == puntoVenta.getIdPuntoVenta()) {
+                if (crearPlu) {
+                    plus.add(plu);
+                    venta.setPlu(plu);
+                    precio.setPlu(plu);
+                }
+                ventas.add(venta);
+                precios.add(precio);
+
+                Movimiento m = movimientoDAOImpl.cargar(movimiento.getIdMovimiento());
+                if (m == null) {
+                    movimientoDAOImpl.guardar(movimiento);
+                } else {
+                    if(m.getCantidad()==0){
+                        movimientoDAOImpl.eliminar(m);
+                        movimientoDAOImpl.guardar(movimiento);
+                    }
+                    else if(m.getPesoVenta()==0){
+                        movimientoDAOImpl.eliminar(m);
+                        movimientoDAOImpl.guardar(movimiento);
+                    }
+                    else if(!(m.getFecha().equals(movimiento.getFecha()))){
+                        boolean flag = true;
+                        int idM = movimiento.getIdMovimiento();
+                        do{
+                            idM+=9999;
+                            flag = (movimientoDAOImpl.cargar(idM)!=null);
+                        }while(flag);
+                        movimiento.setIdMovimiento(idM);
+                        movimientoDAOImpl.guardar(movimiento);
+                    }
+                }
             }
-            if (crearPlu) {
-                plus.add(plu);
-                venta.setPlu(plu);
-                precio.setPlu(plu);
-            }
-            ventas.add(venta);
-            precios.add(precio);
-            movimientoDAOImpl.getCurrentSession().saveOrUpdate(movimiento);
         }
         movimientoDAOImpl.commit();
-        movimientoDAOImpl.cerrarSession();
+
         puntoVentaDAOImpl.iniciarTransaccion();
         for (PuntoVenta pv : puntoVentas) {
-            PuntoVenta p = puntoVentaDAOImpl.cargar(pv.getIdPuntoVenta());
-            if (p == null) {
+            PuntoVenta pl = puntoVentaDAOImpl.cargar(pv.getIdPuntoVenta());
+            if (pl == null) {
                 puntoVentaDAOImpl.guardar(pv);
-            } 
+            }
         }
         puntoVentaDAOImpl.commit();
-        puntoVentaDAOImpl.cerrarSession();
 
         pluDAOImpl.iniciarTransaccion();
         for (Plu p : plus) {
@@ -196,7 +234,6 @@ public class ProcesadorArchivo {
             }
         }
         pluDAOImpl.commit();
-        pluDAOImpl.cerrarSession();
 
         ventaDAOImpl.iniciarTransaccion();
         for (Venta v : ventas) {
@@ -204,18 +241,30 @@ public class ProcesadorArchivo {
             if (va == null) {
                 ventaDAOImpl.guardar(v);
             } else {
-                ventaDAOImpl.actualizar(va);
+                if(va.getPesoVenta()==0){
+                    ventaDAOImpl.eliminar(va);
+                    ventaDAOImpl.guardar(v);
+                }
+                else if(!va.getFecha().equals(v.getFecha())){
+                     boolean flag = true;
+                        int idV = v.getIdVenta();
+                        do{
+                            idV+=9999;
+                            flag = (ventaDAOImpl.cargar(idV)!=null);
+                        }while(flag);
+                        v.setIdVenta(idV);
+                        ventaDAOImpl.guardar(v);
+                }
             }
         }
         ventaDAOImpl.commit();
-        ventaDAOImpl.cerrarSession();
 
         precioDAOImpl.iniciarTransaccion();
         for (Precio pr : precios) {
             Precio po = precioDAOImpl.cargarPrecioPorPluYTienda(pr.getPlu().getIdPlu(), pr.getPuntoVenta().getIdPuntoVenta());
             if (po == null) {
                 precioDAOImpl.guardar(pr);
-            } 
+            }
         }
         precioDAOImpl.commit();
         precioDAOImpl.cerrarSession();

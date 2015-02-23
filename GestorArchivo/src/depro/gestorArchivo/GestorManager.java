@@ -6,7 +6,14 @@
 package depro.gestorArchivo;
 
 import depro.dao.DAOManager;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.NonUniqueObjectException;
 
 /**
@@ -16,10 +23,18 @@ import org.hibernate.NonUniqueObjectException;
 public class GestorManager {
 
     private DAOManager dAOManager;
+    public static int tienda;
 
     public void GestionarArchivoPlu(String ruta) throws IOException, Exception, NumberFormatException, NonUniqueObjectException {
-        ProcesadorArchivo procesadorArchivo = new ProcesadorArchivo(dAOManager);
-        procesadorArchivo.ProcesarArchivo(ruta);
+        if (tienda > 50 && tienda < 99) {
+            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tienda);
+            ProcesadorArchivo procesadorArchivo = new ProcesadorArchivo(dAOManager);
+            procesadorArchivo.ProcesarArchivo(ruta);
+            copiarArchivoCarga(ruta);
+        }
+        else{
+            throw new Exception("Acceso no autorizado a la base de datos T"+tienda);
+        }
     }
 
     /**
@@ -27,5 +42,24 @@ public class GestorManager {
      */
     public void setDAOManager(DAOManager dAOManager) {
         this.dAOManager = dAOManager;
+    }
+
+    private void copiarArchivoCarga(String ruta) {
+        File source = new File(ruta);
+        String y = "..\\archivosCargados\\Movimiento";
+        Calendar c = Calendar.getInstance();
+        y += c.getTime().toString();
+        y += ".txt";
+        y = y.replaceAll("\\:", "-");
+        File dest = new File(y);
+        CopyOption[] options = new CopyOption[]{
+            StandardCopyOption.REPLACE_EXISTING,
+            StandardCopyOption.COPY_ATTRIBUTES
+        };
+        try {
+            Files.copy(source.toPath(), dest.toPath(), options);
+        } catch (IOException ex) {
+            Logger.getLogger(GestorManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

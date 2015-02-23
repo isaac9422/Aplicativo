@@ -1,0 +1,4 @@
+idPuntoVenta;celular;ciudad;direccion;directorioDefecto;nombre;telefono
+51;;;;;Laureles;
+52;;;;;La Frontera;
+99;;;;;Default;

@@ -6,7 +6,6 @@
 package depro.dao;
 
 import depro.modelo.Plu;
-import java.io.Serializable;
 
 /**
  *

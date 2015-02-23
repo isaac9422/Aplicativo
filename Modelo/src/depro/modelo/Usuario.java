@@ -13,7 +13,6 @@ package depro.modelo;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,7 +24,6 @@ public class Usuario {
     private String nombreUsuario;
     private String pass;
     private String tipoUsuario;
-    private PuntoVenta puntoVenta;
 
     /**
      * @return the nombre
@@ -111,21 +109,6 @@ public class Usuario {
      */
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
-    }
-
-    /**
-     * @return the puntoVenta
-     */
-    @ManyToOne
-    public PuntoVenta getPuntoVenta() {
-        return puntoVenta;
-    }
-
-    /**
-     * @param puntoVenta the puntoVenta to set
-     */
-    public void setPuntoVenta(PuntoVenta puntoVenta) {
-        this.puntoVenta = puntoVenta;
     }
     
 }

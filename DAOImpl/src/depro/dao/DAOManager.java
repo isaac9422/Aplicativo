@@ -5,12 +5,6 @@
  */
 package depro.dao;
 
-import depro.dao.PluDAOImpl;
-import depro.dao.PrecioDAOImpl;
-import depro.dao.PuntoVentaDAOImpl;
-import depro.dao.UsuarioDAOImpl;
-import depro.dao.VentaDAOImpl;
-
 /**
  *
  * @author Jhunior

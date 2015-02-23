@@ -6,7 +6,6 @@
 package depro.dao;
 
 import depro.modelo.Movimiento;
-import java.math.BigDecimal;
 
 /**
  *

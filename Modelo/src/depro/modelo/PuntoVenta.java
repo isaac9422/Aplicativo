@@ -9,7 +9,6 @@ package depro.modelo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,7 +28,6 @@ public class PuntoVenta implements Serializable {
     private String direccion;
     private List<Venta> ventasPlu;
     private String nombre;
-    private List<Usuario> usuarios;
     private String ciudad;
     private List<Precio> preciosTienda;
     private String telefono;
@@ -95,23 +93,6 @@ public class PuntoVenta implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return the usuarios
-     */
-    @OneToMany(mappedBy = "puntoVenta")
-    @Cascade({CascadeType.ALL})
-    @LazyCollection(LazyCollectionOption.FALSE)
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    /**
-     * @param usuarios the usuarios to set
-     */
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
     }
 
     /**

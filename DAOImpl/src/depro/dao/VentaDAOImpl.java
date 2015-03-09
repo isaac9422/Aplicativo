@@ -6,7 +6,6 @@
 package depro.dao;
 
 import depro.modelo.Venta;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -20,11 +19,11 @@ public class VentaDAOImpl extends HibernateDAOImpl<Venta, Integer> {
     }
 
     public void limpiarTabla() {
-        getCurrentSession().createSQLQuery("TRUNCATE `venta`").executeUpdate();
+        getCurrentSession().createSQLQuery("TRUNCATE `Venta`").executeUpdate();
     }
 
     public List<Venta> listarVentasPorRangoFechas(String rangoA, String rangoB) {
-        return getCurrentSession().createSQLQuery("select * from venta where fecha >= '" + rangoA
+        return getCurrentSession().createSQLQuery("select * from Venta where fecha >= '" + rangoA
                 + "' and fecha <= '" + rangoB + "'").list();
     }
 

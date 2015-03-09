@@ -3,10 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ISA"/>
-        <group name="Depro">
-            <file>file:/D:/Proyecto/Carnes/GestorArchivo/src/depro/gestorArchivo/ProcesadorArchivo.java</file>
-            <file>file:/D:/Proyecto/Carnes/GestorArchivo/test/depro/gestorArchivo/GestorManagerTest.java</file>
-            <file>file:/D:/Proyecto/Carnes/GestorArchivo/src/depro/gestorArchivo/GestorManager.java</file>
-        </group>
+        <group name="Depro"/>
     </open-files>
 </project-private>

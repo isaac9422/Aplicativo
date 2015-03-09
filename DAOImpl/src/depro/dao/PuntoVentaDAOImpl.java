@@ -23,6 +23,6 @@ public class PuntoVentaDAOImpl extends HibernateDAOImpl<PuntoVenta, Integer>{
     }
     
     public List<Integer> listaId(){
-        return (List<Integer>) getCurrentSession().createSQLQuery("select idPuntoVenta from puntoventa").list();
+        return (List<Integer>) getCurrentSession().createQuery("select idPuntoVenta from PuntoVenta").list();
     }
 }

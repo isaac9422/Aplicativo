@@ -20,6 +20,7 @@ import depro.modelo.Precio;
 import depro.modelo.PuntoVenta;
 import depro.modelo.Usuario;
 import depro.modelo.Venta;
+import depro.util.CargaProperties;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,18 +54,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private static int tiendaUsuario;
     private static String tipoUsuario = "No hay usuario conectado";
     private static int stateConnection = 0;
-    private static String directorioUsuario = "C:\\";
+    private static String directorioUsuario;
+    private CargaProperties lectorProperties;
 
     /**
      * Creates new form InterfazPrincipal
      */
-    public InterfazPrincipal() {
+    public InterfazPrincipal() throws Exception {
         dAOManager = new DAOManager();
         gestorManager = new GestorManager();
         gestorManager.setDAOManager(dAOManager);
+        directorioUsuario = "C:\\";
+        lectorProperties = new CargaProperties();
+        tiendaUsuario = lectorProperties.obtenerBaseDeDatos();
         initComponents();
         llenarComboBoxUsuario();
-        llenarComboBoxTienda();
     }
 
     /**
@@ -73,30 +77,22 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      * cada usuario registrado en el sistema
      */
     private void llenarComboBoxUsuario() {
-        List<String> nombresUsuario = dAOManager.getUsuarioDAOImpl().listarNombreUsuarios();
-        DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBoxUsuarios.getModel();
-        model.removeAllElements();
-        model.addElement("Superusuario");
-        for (String nombreUsuario : nombresUsuario) {
-            model.addElement(nombreUsuario);
+        try {
+            throw new Exception();
+//            List<String> nombresUsuario = dAOManager.getUsuarioDAOImpl().listarNombreUsuarios();
+//            DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBoxUsuarios.getModel();
+//            model.removeAllElements();
+//            model.addElement("Superusuario");
+//            for (String nombreUsuario : nombresUsuario) {
+//                model.addElement(nombreUsuario);
+//            }
+//            jComboBoxUsuarios.setSelectedIndex(-1);
+        } catch (Exception e) {
+            DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBoxUsuarios.getModel();
+            model.removeAllElements();
+            model.addElement("Superusuario");
+            jComboBoxUsuarios.setSelectedIndex(-1);
         }
-        jComboBoxUsuarios.setSelectedIndex(-1);
-    }
-
-    /**
-     * *
-     * Método para relizar el llenado del comboBox que contiene los puntos de
-     * venta registrados en el sistea
-     */
-    private void llenarComboBoxTienda() {
-        List<Integer> idTiendas = dAOManager.getPuntoVentaDAOImpl().listaId();
-        DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBoxTienda.getModel();
-        model.removeAllElements();
-        for (Integer idTienda : idTiendas) {
-            model.addElement(idTienda);
-        }
-        model.addElement(99);
-        jComboBoxTienda.setSelectedIndex(-1);
     }
 
     /**
@@ -116,9 +112,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jComboBoxUsuarios = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jComboBoxTienda = new javax.swing.JComboBox();
-        jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jMenuBar3 = new javax.swing.JMenuBar();
         menuArchivo2 = new javax.swing.JMenu();
@@ -257,8 +250,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña");
 
-        jLabel23.setText("Tienda");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -266,52 +257,39 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(btnAcpetar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAcpetar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
                 .addComponent(btnAcpetar)
-                .addGap(23, 23, 23))
+                .addGap(19, 19, 19))
         );
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel24.setText("Crear nueva tienda");
-        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel24MouseClicked(evt);
-            }
-        });
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel25.setText("Crear nuevo usuario");
@@ -350,20 +328,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(ventanaInicioLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel25)))
                 .addContainerGap())
         );
         ventanaInicioLayout.setVerticalGroup(
             ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
-                .addGroup(ventanaInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1259,59 +1233,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuSalirActionPerformed
 
-    private void menuSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalir2ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_menuSalir2ActionPerformed
-    /**
-     * *
-     * Evento generado por el boton aceptar de la interfaz de loggin Usado para
-     * establecer que usuario se ha logueado a la aplicación
-     *
-     * @param evt
-     */
-    private void btnAcpetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpetarActionPerformed
-        if (!jTextField1.getText().equals("") && !jPasswordField1.getText().equals("")) {
-            //Conexión por medio del superUsuario local de la aplicación
-            if (jTextField1.getText().equals("Superusuario") && jPasswordField1.getText().equals("0123456789aÑ")) {
-                this.ventanaInicio.setVisible(false);
-                this.setExtendedState(MAXIMIZED_BOTH);
-                this.setVisible(true);
-                this.setEnabled(true);
-                InterfazPrincipal.tipoUsuario = "Superusuario";
-                InterfazPrincipal.tiendaUsuario = (int) jComboBoxTienda.getSelectedItem();
-            } else {
-                //Usuarios de DB
-                try {
-                    UsuarioDAOImpl usuarioDAOImpl = dAOManager.getUsuarioDAOImpl();
-                    Usuario usuario = usuarioDAOImpl.buscarPorNombreUsuarioYContrasena(jTextField1.getText(), jPasswordField1.getText());
-                    if (usuario != null) {
-                        this.ventanaInicio.setVisible(false);
-                        this.setExtendedState(MAXIMIZED_BOTH);
-                        this.setVisible(true);
-                        this.setEnabled(true);
-                        int idPuntoVenta = (int) jComboBoxTienda.getSelectedItem();
-                        InterfazPrincipal.tiendaUsuario = idPuntoVenta;
-                        InterfazPrincipal.tipoUsuario = usuario.getTipoUsuario();
-                        directorioUsuario = dAOManager.getPuntoVentaDAOImpl().cargar(idPuntoVenta).getDirectorioDefecto();
-                    } else {
-                        ventanaInicio.setAlwaysOnTop(false);
-                        JOptionPane.showMessageDialog(this, "Información de logueo incorrecta", "", JOptionPane.PLAIN_MESSAGE);
-                        ventanaInicio.setAlwaysOnTop(true);
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "No se pudo realizar la solicitud", "", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-            jLabelTienda.setText((tiendaUsuario < 0 || tiendaUsuario > 99) ? " No tiene punto de venta asociado " : "El punto de venta asociado es: " + tiendaUsuario);
-            jLabelTipoUsuario.setText("El tipo de usuario que actualmente esta operando es: " + tipoUsuario);
-            jPanelInformacionUsuario.setVisible(true);
-        } else {
-            ventanaInicio.setAlwaysOnTop(false);
-            JOptionPane.showMessageDialog(this, "Campos vacios, por favor ingrese información de logueo", "", JOptionPane.PLAIN_MESSAGE);
-            ventanaInicio.setAlwaysOnTop(true);
-        }
-    }//GEN-LAST:event_btnAcpetarActionPerformed
-
     private void menuCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCrearUsuarioActionPerformed
         dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
         List<Integer> tiendas = dAOManager.getPuntoVentaDAOImpl().listaId();
@@ -1329,7 +1250,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuSesionActionPerformed
 
     private void jMenuItemCapturarPluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCapturarPluActionPerformed
-        // TODO add your handling code here:
         jTextFieldRutaPlu.setText("");
         jDialogCapturaPlu.setLocationRelativeTo(this);
         jDialogCapturaPlu.setVisible(true);
@@ -1338,8 +1258,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCapturarPluActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         jDialogCrearUsuarios.dispose();
+        if (tiendaUsuario == 0) {
+            hacerLogin();
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
     /**
      * *
@@ -1349,7 +1272,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         Usuario usuario = new Usuario();
         usuario.setNombre(jTextField2.getText());
         usuario.setApellido(jTextField3.getText());
@@ -1392,7 +1314,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here
         jTextField5.setVisible(true);
         jTextField6.setVisible(false);
         jDialogConsultas.setLocationRelativeTo(null);
@@ -1401,7 +1322,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
         jTextField6.setVisible(true);
         jTextField5.setVisible(false);
         jDialogConsultas.setLocationRelativeTo(null);
@@ -1410,20 +1330,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-//        jFileChooser1.setCurrentDirectory(new File(directorioUsuario));
         if (jFileChooser1.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
             jTextFieldRutaPlu.setText(jFileChooser1.getSelectedFile().getPath());
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
         jDialogCapturaPlu.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
         Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -1452,7 +1368,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jMenuItemVerTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerTiendasActionPerformed
-        // TODO add your handling code here:
         PuntoVentaDAOImpl pvdaoi = dAOManager.getPuntoVentaDAOImpl();
         dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<PuntoVenta> lista = pvdaoi.listar();
@@ -1477,7 +1392,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemVerTiendasActionPerformed
 
     private void jMenuItemVerPluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerPluActionPerformed
-        // TODO add your handling code here:
         PluDAOImpl pvdaoi = dAOManager.getPluDAOImpl();
         dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Plu> lista = pvdaoi.listar();
@@ -1499,7 +1413,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemVerPluActionPerformed
 
     private void jMenuItemVerPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerPreciosActionPerformed
-        // TODO add your handling code here:
         PrecioDAOImpl pvdaoi = dAOManager.getPrecioDAOImpl();
         dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Precio> lista = pvdaoi.listarTodo(tiendaUsuario);
@@ -1520,7 +1433,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemVerPreciosActionPerformed
 
     private void jMenuItemVerVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerVentasActionPerformed
-        // TODO add your handling code here:
         VentaDAOImpl pvdaoi = dAOManager.getVentaDAOImpl();
         dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Venta> lista = pvdaoi.listar();
@@ -1543,14 +1455,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemVerVentasActionPerformed
 
     private void jMenuItemRegistrarPuntoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarPuntoVentaActionPerformed
-        // TODO add your handling code here:
         jDialogCrearTiendas.setLocationRelativeTo(this);
         jDialogCrearTiendas.setVisible(true);
     }//GEN-LAST:event_jMenuItemRegistrarPuntoVentaActionPerformed
 
     private void jButtonCancelarCrearTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCrearTiendaActionPerformed
-        // TODO add your handling code here:
         jDialogCrearTiendas.dispose();
+        if (tiendaUsuario == 0) {
+            hacerLogin();
+        }
+
     }//GEN-LAST:event_jButtonCancelarCrearTiendaActionPerformed
     /**
      * *
@@ -1560,7 +1474,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      * @param evt
      */
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
         int idTienda = Integer.parseInt(jTextField7.getText());
         String nombre = jTextField8.getText();
         String direccion = jTextField9.getText();
@@ -1601,7 +1514,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
         PuntoVentaDAOImpl pvdaoi = dAOManager.getPuntoVentaDAOImpl();
         pvdaoi.iniciarTransaccion();
         DefaultTableModel model = (DefaultTableModel) jTableTienda.getModel();
@@ -1621,7 +1533,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
         PrecioDAOImpl pvdaoi = dAOManager.getPrecioDAOImpl();
         pvdaoi.iniciarTransaccion();
         DefaultTableModel model = (DefaultTableModel) jTablePrecio.getModel();
@@ -1638,14 +1549,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
         if (jFileChooser2.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
             jTextField13.setText(jFileChooser2.getSelectedFile().getPath());
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jMenuItemVerMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerMovimientoActionPerformed
-        // TODO add your handling code here:
         MovimientoDAOImpl pvdaoi = dAOManager.getMovimientoDAOImpl();
         dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Movimiento> lista = pvdaoi.listar();
@@ -1671,7 +1580,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemVerMovimientoActionPerformed
 
     private void jMenuItemReporteEscalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReporteEscalaActionPerformed
-        // TODO add your handling code here:
         Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -1754,22 +1662,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         thread.start();
     }//GEN-LAST:event_jMenuItemReporteFechaActionPerformed
 
-    private void jComboBoxUsuariosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxUsuariosItemStateChanged
-        // TODO add your handling code here:
-        if (jComboBoxUsuarios.getSelectedIndex() < 0) {
-            jTextField1.setText("");
-        } else {
-            jTextField1.setText(jComboBoxUsuarios.getSelectedItem().toString());
-        }
-    }//GEN-LAST:event_jComboBoxUsuariosItemStateChanged
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
         jDialogConsultas.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
         jDialogConsultas.setAlwaysOnTop(false);
         String numeroPlu = jTextField5.getText();
         String numeroEscala = jTextField6.getText();
@@ -1895,34 +1792,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jLabel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseClicked
-        // TODO add your handling code here:
-        this.ventanaInicio.setVisible(false);
-        this.setExtendedState(MAXIMIZED_BOTH);
-        this.setVisible(true);
-        this.setEnabled(true);
-
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
-        List<Integer> tiendas = dAOManager.getPuntoVentaDAOImpl().listaId();
-        if (tiendas.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay tiendas registradas", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            jDialogCrearUsuarios.setVisible(true);
-            jDialogCrearUsuarios.setLocationRelativeTo(this);
-        }
-    }//GEN-LAST:event_jLabel25MouseClicked
-
-    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-        // TODO add your handling code here:
-        this.ventanaInicio.setVisible(false);
-        this.setExtendedState(MAXIMIZED_BOTH);
-        this.setVisible(true);
-        this.setEnabled(true);
-
-        jDialogCrearTiendas.setVisible(true);
-        jDialogCrearTiendas.setLocationRelativeTo(this);
-    }//GEN-LAST:event_jLabel24MouseClicked
-
     /**
      * *
      * Evento que genera la consolidación de los datos en el punto de venta que
@@ -1990,7 +1859,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
         if (tiendaUsuario == 99) {
             dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
             dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
@@ -1998,7 +1866,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             List<Integer> tiendasBD = dAOManager.getPuntoVentaDAOImpl().listaId();
 
             for (int tbd : tiendasBD) {
-
                 dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tbd);
 
                 List<Movimiento> movimientos = dAOManager.getMovimientoDAOImpl().listar();
@@ -2045,6 +1912,81 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void menuSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalir2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menuSalir2ActionPerformed
+
+    private void jLabel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseClicked
+        this.ventanaInicio.setVisible(false);
+        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setVisible(true);
+        this.setEnabled(true);
+
+        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
+        List<Integer> tiendas = dAOManager.getPuntoVentaDAOImpl().listaId();
+        if (tiendas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay tiendas registradas", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            jDialogCrearUsuarios.setVisible(true);
+            jDialogCrearUsuarios.setLocationRelativeTo(this);
+        }
+    }//GEN-LAST:event_jLabel25MouseClicked
+
+    private void jComboBoxUsuariosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxUsuariosItemStateChanged
+        if (jComboBoxUsuarios.getSelectedIndex() < 0) {
+            jTextField1.setText("");
+        } else {
+            jTextField1.setText(jComboBoxUsuarios.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_jComboBoxUsuariosItemStateChanged
+
+    /**
+     * *
+     * Evento generado por el boton aceptar de la interfaz de loggin Usado para
+     * establecer que usuario se ha logueado a la aplicación
+     *
+     * @param evt
+     */
+    private void btnAcpetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcpetarActionPerformed
+        if (!jTextField1.getText().equals("") && !jPasswordField1.getText().equals("")) {
+            //Conexión por medio del superUsuario local de la aplicación
+            char[] c = "0123456789aÑ".toCharArray();
+            if (jTextField1.getText().equals("Superusuario") && Arrays.equals(jPasswordField1.getPassword(), c)) {
+                this.ventanaInicio.setVisible(false);
+                this.setExtendedState(MAXIMIZED_BOTH);
+                this.setVisible(true);
+                this.setEnabled(true);
+                InterfazPrincipal.tipoUsuario = "Superusuario";
+            } else {
+                //Usuarios de DB
+                try {
+                    UsuarioDAOImpl usuarioDAOImpl = dAOManager.getUsuarioDAOImpl();
+                    Usuario usuario = usuarioDAOImpl.buscarPorNombreUsuarioYContrasena(jTextField1.getText(), jPasswordField1.getText());
+                    if (usuario != null) {
+                        this.ventanaInicio.setVisible(false);
+                        this.setExtendedState(MAXIMIZED_BOTH);
+                        this.setVisible(true);
+                        this.setEnabled(true);
+                        InterfazPrincipal.tipoUsuario = usuario.getTipoUsuario();
+                    } else {
+                        ventanaInicio.setAlwaysOnTop(false);
+                        JOptionPane.showMessageDialog(this, "Información de logueo incorrecta", "", JOptionPane.PLAIN_MESSAGE);
+                        ventanaInicio.setAlwaysOnTop(true);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "No se pudo realizar la solicitud", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            jLabelTienda.setText((tiendaUsuario < 0 || tiendaUsuario > 99) ? " No tiene punto de venta asociado " : "El punto de venta asociado es: " + tiendaUsuario);
+            jLabelTipoUsuario.setText("El tipo de usuario que actualmente esta operando es: " + tipoUsuario);
+            jPanelInformacionUsuario.setVisible(true);
+        } else {
+            ventanaInicio.setAlwaysOnTop(false);
+            JOptionPane.showMessageDialog(this, "Campos vacios, por favor ingrese información de logueo", "", JOptionPane.PLAIN_MESSAGE);
+            ventanaInicio.setAlwaysOnTop(true);
+        }
+    }//GEN-LAST:event_btnAcpetarActionPerformed
 
     private void crearDatabase(DAOManager dAOManager, int bd) {
         String tableMovimiento = "CREATE TABLE \"Movimiento\" (\n"
@@ -2111,7 +2053,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jPasswordField1.setText("");
         this.setEnabled(false);
         llenarComboBoxUsuario();
-        llenarComboBoxTienda();
         this.ventanaInicio.setVisible(true);
         this.ventanaInicio.setLocationRelativeTo(this);
     }
@@ -2165,7 +2106,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     }
                     if (hdaoi.getCurrentSession().connection().isClosed()) {
                     }
-//                    prueba(hdaoi);
                     InterfazPrincipal escritorio = new InterfazPrincipal();
                     escritorio.setExtendedState(MAXIMIZED_BOTH);
                     escritorio.setVisible(true);
@@ -2174,7 +2114,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     escritorio.jPanelInformacionUsuario.setVisible(false);
                     escritorio.setEnabled(false);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "No se pudo realizar la conexión, revisa la configuración del sistema :" + stateConnection, "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión indicados, revisa la configuración del sistema : " + stateConnection, "\n Comunicate con el encargado", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -2197,7 +2137,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonCancelarCrearTienda;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBoxTienda;
     private javax.swing.JComboBox jComboBoxUsuarios;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -2228,8 +2167,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

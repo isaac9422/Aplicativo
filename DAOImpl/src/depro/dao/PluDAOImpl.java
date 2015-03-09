@@ -18,7 +18,7 @@ public class PluDAOImpl extends HibernateDAOImpl<Plu, Integer> {
     }
     
     public void limpiarTabla(){
-        getCurrentSession().createSQLQuery("TRUNCATE 'plu'");
+        getCurrentSession().createSQLQuery("TRUNCATE 'Plu'");
     }
     
     

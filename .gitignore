@@ -29,3 +29,9 @@ hs_err_pid*
 /DAOImpl/build/
 /DAOImpl/dist/
 /GestorArchivo/dist/
+/CryptoKey/nbproject/private/
+/prueba/nbproject/private/
+/prueba/build/
+/Util/build/
+/Util/nbproject/private/
+/Util/dist/

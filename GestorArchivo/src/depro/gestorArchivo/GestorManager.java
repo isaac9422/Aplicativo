@@ -26,15 +26,10 @@ public class GestorManager {
     public static int tienda;
 
     public void GestionarArchivoPlu(String ruta) throws IOException, Exception, NumberFormatException, NonUniqueObjectException {
-        if (tienda > 50 && tienda < 99) {
             dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tienda);
             ProcesadorArchivo procesadorArchivo = new ProcesadorArchivo(dAOManager);
             procesadorArchivo.ProcesarArchivo(ruta);
             copiarArchivoCarga(ruta);
-        }
-        else{
-            throw new Exception("Acceso no autorizado a la base de datos T"+tienda);
-        }
     }
 
     /**

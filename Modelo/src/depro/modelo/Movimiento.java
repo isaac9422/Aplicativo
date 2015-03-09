@@ -5,6 +5,7 @@
  */
 package depro.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Movimiento")
-public class Movimiento {
+public class Movimiento implements Serializable {
     
     private int idMovimiento;
     private int plu;

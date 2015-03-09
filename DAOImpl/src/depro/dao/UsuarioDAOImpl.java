@@ -20,7 +20,7 @@ public class UsuarioDAOImpl extends HibernateDAOImpl<Usuario, Integer> {
     }
     
     public void limpiarTabla(){
-        getCurrentSession().createSQLQuery("TRUNCATE 'usuario'").executeUpdate();
+        getCurrentSession().createSQLQuery("TRUNCATE 'Usuario'").executeUpdate();
     }
     
     public Usuario buscarPorNombreUsuario(String nombreUsuario){

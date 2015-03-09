@@ -180,38 +180,33 @@ public class ProcesadorArchivo {
                         break;
                 }
             }
-            if (puntoVenta.getIdPuntoVenta() > 50 && puntoVenta.getIdPuntoVenta() < 99
-                    && GestorManager.tienda == puntoVenta.getIdPuntoVenta()) {
-                if (crearPlu) {
-                    plus.add(plu);
-                    venta.setPlu(plu);
-                    precio.setPlu(plu);
-                }
-                ventas.add(venta);
-                precios.add(precio);
+            if (crearPlu) {
+                plus.add(plu);
+                venta.setPlu(plu);
+                precio.setPlu(plu);
+            }
+            ventas.add(venta);
+            precios.add(precio);
 
-                Movimiento m = movimientoDAOImpl.cargar(movimiento.getIdMovimiento());
-                if (m == null) {
+            Movimiento m = movimientoDAOImpl.cargar(movimiento.getIdMovimiento());
+            if (m == null) {
+                movimientoDAOImpl.guardar(movimiento);
+            } else {
+                if (m.getCantidad() == 0) {
+                    movimientoDAOImpl.eliminar(m);
                     movimientoDAOImpl.guardar(movimiento);
-                } else {
-                    if(m.getCantidad()==0){
-                        movimientoDAOImpl.eliminar(m);
-                        movimientoDAOImpl.guardar(movimiento);
-                    }
-                    else if(m.getPesoVenta()==0){
-                        movimientoDAOImpl.eliminar(m);
-                        movimientoDAOImpl.guardar(movimiento);
-                    }
-                    else if(!(m.getFecha().equals(movimiento.getFecha()))){
-                        boolean flag = true;
-                        int idM = movimiento.getIdMovimiento();
-                        do{
-                            idM+=9999;
-                            flag = (movimientoDAOImpl.cargar(idM)!=null);
-                        }while(flag);
-                        movimiento.setIdMovimiento(idM);
-                        movimientoDAOImpl.guardar(movimiento);
-                    }
+                } else if (m.getPesoVenta() == 0) {
+                    movimientoDAOImpl.eliminar(m);
+                    movimientoDAOImpl.guardar(movimiento);
+                } else if (!(m.getFecha().equals(movimiento.getFecha()))) {
+                    boolean flag = true;
+                    int idM = movimiento.getIdMovimiento();
+                    do {
+                        idM += 9999;
+                        flag = (movimientoDAOImpl.cargar(idM) != null);
+                    } while (flag);
+                    movimiento.setIdMovimiento(idM);
+                    movimientoDAOImpl.guardar(movimiento);
                 }
             }
         }
@@ -241,19 +236,18 @@ public class ProcesadorArchivo {
             if (va == null) {
                 ventaDAOImpl.guardar(v);
             } else {
-                if(va.getPesoVenta()==0){
+                if (va.getPesoVenta() == 0) {
                     ventaDAOImpl.eliminar(va);
                     ventaDAOImpl.guardar(v);
-                }
-                else if(!va.getFecha().equals(v.getFecha())){
-                     boolean flag = true;
-                        int idV = v.getIdVenta();
-                        do{
-                            idV+=9999;
-                            flag = (ventaDAOImpl.cargar(idV)!=null);
-                        }while(flag);
-                        v.setIdVenta(idV);
-                        ventaDAOImpl.guardar(v);
+                } else if (!va.getFecha().equals(v.getFecha())) {
+                    boolean flag = true;
+                    int idV = v.getIdVenta();
+                    do {
+                        idV += 9999;
+                        flag = (ventaDAOImpl.cargar(idV) != null);
+                    } while (flag);
+                    v.setIdVenta(idV);
+                    ventaDAOImpl.guardar(v);
                 }
             }
         }

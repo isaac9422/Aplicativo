@@ -75,12 +75,7 @@ public class ProcesadorArchivo {
                 switch (numeroColumna) {
                     case 1:
                         int idTrans = Integer.parseInt(campo);
-                        Movimiento m = movimientoDAOImpl.cargar(idTrans);
-                        if (m == null) {
-                            movimiento.setIdMovimiento(idTrans);
-                        } else {
-                            movimiento.setIdMovimiento(idTrans);
-                        }
+                        movimiento.setIdMovimiento(idTrans);
                         venta.setIdVenta(idTrans);
                         break;
                     case 3:
@@ -211,6 +206,7 @@ public class ProcesadorArchivo {
             }
         }
         movimientoDAOImpl.commit();
+        movimientoDAOImpl.cerrarSession();
 
         puntoVentaDAOImpl.iniciarTransaccion();
         for (PuntoVenta pv : puntoVentas) {
@@ -220,6 +216,7 @@ public class ProcesadorArchivo {
             }
         }
         puntoVentaDAOImpl.commit();
+        puntoVentaDAOImpl.cerrarSession();
 
         pluDAOImpl.iniciarTransaccion();
         for (Plu p : plus) {
@@ -229,6 +226,7 @@ public class ProcesadorArchivo {
             }
         }
         pluDAOImpl.commit();
+        pluDAOImpl.cerrarSession();
 
         ventaDAOImpl.iniciarTransaccion();
         for (Venta v : ventas) {
@@ -236,10 +234,7 @@ public class ProcesadorArchivo {
             if (va == null) {
                 ventaDAOImpl.guardar(v);
             } else {
-                if (va.getPesoVenta() == 0) {
-                    ventaDAOImpl.eliminar(va);
-                    ventaDAOImpl.guardar(v);
-                } else if (!va.getFecha().equals(v.getFecha())) {
+                if (!va.getFecha().equals(v.getFecha())) {
                     boolean flag = true;
                     int idV = v.getIdVenta();
                     do {
@@ -252,6 +247,7 @@ public class ProcesadorArchivo {
             }
         }
         ventaDAOImpl.commit();
+        ventaDAOImpl.cerrarSession();
 
         precioDAOImpl.iniciarTransaccion();
         for (Precio pr : precios) {

@@ -9,7 +9,6 @@ package depro.dao;
 
 import java.io.Serializable;
 import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -168,10 +167,4 @@ public class HibernateDAOImpl<T, ID extends Serializable> implements
 		}
 		return (T) crit.uniqueResult();
 	}
-        
-        public void cambiarBaseDatos(int bd){
-            String s = "use T"+bd;
-            getCurrentSession().createSQLQuery(s).executeUpdate();
-        }
-
 }

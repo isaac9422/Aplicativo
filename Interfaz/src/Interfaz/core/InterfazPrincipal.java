@@ -26,10 +26,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -56,6 +54,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private static int stateConnection = 0;
     private static String directorioUsuario;
     private CargaProperties lectorProperties;
+    private String nombreTienda;
 
     /**
      * Creates new form InterfazPrincipal
@@ -66,9 +65,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         gestorManager.setDAOManager(dAOManager);
         directorioUsuario = "C:\\";
         lectorProperties = new CargaProperties();
-        tiendaUsuario = lectorProperties.obtenerBaseDeDatos();
+        tiendaUsuario = lectorProperties.obtenerEscala();
+        nombreTienda = lectorProperties.obtenerNombreTienda();
         initComponents();
         llenarComboBoxUsuario();
+        setTitle(nombreTienda);
     }
 
     /**
@@ -118,16 +119,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         menuSalir2 = new javax.swing.JMenuItem();
         menuAyuda2 = new javax.swing.JMenu();
         itemAyuda2 = new javax.swing.JMenuItem();
-        jDialogConsultas = new javax.swing.JDialog();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
         jMenu1 = new javax.swing.JMenu();
@@ -197,6 +188,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jPanelInformacionUsuario = new javax.swing.JPanel();
         jLabelTipoUsuario = new javax.swing.JLabel();
         jLabelTienda = new javax.swing.JLabel();
+        jLabelNombreTienda = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuSesion = new javax.swing.JMenuItem();
@@ -211,9 +203,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jMenuItemConsolidar = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        menuConsultas = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuVista = new javax.swing.JMenu();
         jMenuItemVerTiendas = new javax.swing.JMenuItem();
         jMenuItemVerPlu = new javax.swing.JMenuItem();
@@ -264,15 +253,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAcpetar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +319,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaInicioLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel25)))
+                        .addComponent(jLabel25)
+                        .addGap(36, 36, 36)))
                 .addContainerGap())
         );
         ventanaInicioLayout.setVerticalGroup(
@@ -340,87 +330,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        jDialogConsultas.setMinimumSize(new java.awt.Dimension(420, 200));
-        jDialogConsultas.setPreferredSize(new java.awt.Dimension(420, 200));
-        jDialogConsultas.setResizable(false);
-
-        jButton3.setText("Consultar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Cancelar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setText("Plu");
-
-        jLabel11.setText("Escala (Balanza)");
-
-        jLabel12.setText("Rango de fechas");
-
-        javax.swing.GroupLayout jDialogConsultasLayout = new javax.swing.GroupLayout(jDialogConsultas.getContentPane());
-        jDialogConsultas.getContentPane().setLayout(jDialogConsultasLayout);
-        jDialogConsultasLayout.setHorizontalGroup(
-            jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton3)
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jDialogConsultasLayout.setVerticalGroup(
-            jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogConsultasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDialogConsultasLayout.createSequentialGroup()
-                        .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jDialogConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jDialogConsultas.getAccessibleContext().setAccessibleParent(this);
 
         jFileChooser1.setCurrentDirectory(new java.io.File("D:\\Proyecto\\Carnes"));
 
@@ -1013,12 +922,17 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             jPanelInformacionUsuario.setLayout(jPanelInformacionUsuarioLayout);
             jPanelInformacionUsuarioLayout.setHorizontalGroup(
                 jPanelInformacionUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInformacionUsuarioLayout.createSequentialGroup()
+                .addGroup(jPanelInformacionUsuarioLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanelInformacionUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabelTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                        .addComponent(jLabelTipoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap())
+                    .addGroup(jPanelInformacionUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelInformacionUsuarioLayout.createSequentialGroup()
+                            .addGroup(jPanelInformacionUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabelNombreTienda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+                            .addGap(25, 25, 25))
+                        .addGroup(jPanelInformacionUsuarioLayout.createSequentialGroup()
+                            .addComponent(jLabelTipoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addContainerGap())))
             );
             jPanelInformacionUsuarioLayout.setVerticalGroup(
                 jPanelInformacionUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1026,7 +940,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(jLabelTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLabelTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(jLabelTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabelNombreTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addContainerGap())
             );
 
@@ -1108,26 +1024,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             menuHerramientas.add(jMenuConsolidar);
 
             jMenuBar1.add(menuHerramientas);
-
-            menuConsultas.setText("Consultas");
-
-            jMenuItem1.setText("Ventas por plu");
-            jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItem1ActionPerformed(evt);
-                }
-            });
-            menuConsultas.add(jMenuItem1);
-
-            jMenuItem2.setText("Ventas por balanza");
-            jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItem2ActionPerformed(evt);
-                }
-            });
-            menuConsultas.add(jMenuItem2);
-
-            jMenuBar1.add(menuConsultas);
 
             jMenuVista.setText("Vistas");
 
@@ -1234,7 +1130,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuSalirActionPerformed
 
     private void menuCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCrearUsuarioActionPerformed
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
         List<Integer> tiendas = dAOManager.getPuntoVentaDAOImpl().listaId();
         if (tiendas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay tiendas registradas", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -1262,7 +1157,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         if (tiendaUsuario == 0) {
             hacerLogin();
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
     /**
      * *
@@ -1281,7 +1175,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         try {
             UsuarioDAOImpl usuarioDAOImpl = dAOManager.getUsuarioDAOImpl();
             usuarioDAOImpl.iniciarTransaccion();
-            usuarioDAOImpl.cambiarBaseDatos(99);
             Usuario u = usuarioDAOImpl.buscarPorNombreUsuario(usuario.getNombreUsuario());
             if (u == null) {
                 char[] pass1 = jPasswordField2.getPassword();
@@ -1312,22 +1205,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        jTextField5.setVisible(true);
-        jTextField6.setVisible(false);
-        jDialogConsultas.setLocationRelativeTo(null);
-        jDialogConsultas.setVisible(true);
-        jDialogConsultas.setAlwaysOnTop(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        jTextField6.setVisible(true);
-        jTextField5.setVisible(false);
-        jDialogConsultas.setLocationRelativeTo(null);
-        jDialogConsultas.setVisible(true);
-        jDialogConsultas.setAlwaysOnTop(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (jFileChooser1.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
@@ -1369,7 +1246,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemVerTiendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerTiendasActionPerformed
         PuntoVentaDAOImpl pvdaoi = dAOManager.getPuntoVentaDAOImpl();
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<PuntoVenta> lista = pvdaoi.listar();
         pvdaoi.cerrarSession();
         DefaultTableModel model = (DefaultTableModel) jTableTienda.getModel();
@@ -1393,7 +1269,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemVerPluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerPluActionPerformed
         PluDAOImpl pvdaoi = dAOManager.getPluDAOImpl();
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Plu> lista = pvdaoi.listar();
         pvdaoi.cerrarSession();
         DefaultTableModel model = (DefaultTableModel) jTablePlu.getModel();
@@ -1414,7 +1289,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemVerPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerPreciosActionPerformed
         PrecioDAOImpl pvdaoi = dAOManager.getPrecioDAOImpl();
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Precio> lista = pvdaoi.listarTodo(tiendaUsuario);
         pvdaoi.cerrarSession();
         DefaultTableModel model = (DefaultTableModel) jTablePrecio.getModel();
@@ -1434,7 +1308,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemVerVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerVentasActionPerformed
         VentaDAOImpl pvdaoi = dAOManager.getVentaDAOImpl();
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Venta> lista = pvdaoi.listar();
         pvdaoi.cerrarSession();
         DefaultTableModel model = (DefaultTableModel) jTableVenta.getModel();
@@ -1464,7 +1337,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         if (tiendaUsuario == 0) {
             hacerLogin();
         }
-
     }//GEN-LAST:event_jButtonCancelarCrearTiendaActionPerformed
     /**
      * *
@@ -1482,7 +1354,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String celular = jTextField12.getText();
         PuntoVentaDAOImpl puntoVentaDAOImpl = dAOManager.getPuntoVentaDAOImpl();
         puntoVentaDAOImpl.iniciarTransaccion();
-        puntoVentaDAOImpl.cambiarBaseDatos(99);
         PuntoVenta puntoVenta = puntoVentaDAOImpl.cargar(idTienda);
         if (puntoVenta == null) {
             puntoVenta = new PuntoVenta();
@@ -1501,7 +1372,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             puntoVentaDAOImpl.commit();
             puntoVentaDAOImpl.cerrarSession();
             JOptionPane.showMessageDialog(this, "Punto de venta registrado exitosamente", "", JOptionPane.INFORMATION_MESSAGE);
-            crearDatabase(dAOManager, puntoVenta.getIdPuntoVenta());
             jDialogCrearTiendas.dispose();
             if (tiendaUsuario == 0) {
                 hacerLogin();
@@ -1556,7 +1426,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemVerMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerMovimientoActionPerformed
         MovimientoDAOImpl pvdaoi = dAOManager.getMovimientoDAOImpl();
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         List<Movimiento> lista = pvdaoi.listar();
         pvdaoi.cerrarSession();
         DefaultTableModel model = (DefaultTableModel) jTableMovimiento.getModel();
@@ -1585,7 +1454,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    dAOManager.getMovimientoDAOImpl().cambiarBaseDatos(tiendaUsuario);
                     jDialogCargaCrearReporte.setLocationRelativeTo(null);
                     jDialogCargaCrearReporte.setVisible(true);
                     File f = new File("plantillasReportes\\report3.jasper");
@@ -1613,7 +1481,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    dAOManager.getMovimientoDAOImpl().cambiarBaseDatos(tiendaUsuario);
                     jDialogCargaCrearReporte.setLocationRelativeTo(null);
                     jDialogCargaCrearReporte.setVisible(true);
                     File f = new File("plantillasReportes\\report4.jasper");
@@ -1640,7 +1507,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    dAOManager.getMovimientoDAOImpl().cambiarBaseDatos(tiendaUsuario);
                     jDialogCargaCrearReporte.setLocationRelativeTo(null);
                     jDialogCargaCrearReporte.setVisible(true);
                     // TODO add your handling code here:
@@ -1662,136 +1528,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         thread.start();
     }//GEN-LAST:event_jMenuItemReporteFechaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        jDialogConsultas.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        jDialogConsultas.setAlwaysOnTop(false);
-        String numeroPlu = jTextField5.getText();
-        String numeroEscala = jTextField6.getText();
-        Date rangoA = jDateChooser1.getDate();
-        Date rangoB = jDateChooser2.getDate();
-        VentaDAOImpl ventaDAOImpl = dAOManager.getVentaDAOImpl();
-        PrecioDAOImpl precioDAOImpl = dAOManager.getPrecioDAOImpl();
-        MovimientoDAOImpl movimientoDAOImpl = dAOManager.getMovimientoDAOImpl();
-        StringBuilder sb = new StringBuilder();
-        if (!numeroPlu.equals("")) {
-            try {
-                //Con fecha
-                if (!(rangoA == null)) {
-                    if (rangoB != null) {
-                        rangoB = jDateChooser2.getDate();
-                    } else {
-                        rangoB = new Date();
-                    }
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy/dd/MM");
-
-                    int plu = Integer.parseInt(numeroPlu);
-                    jTextField5.setText("");
-                    long totalPeso = ventaDAOImpl.cantidadVendidaPorNumeroPluYFecha(plu, df.format(rangoA), df.format(rangoB));
-                    long plataTotal;
-                    if (tiendaUsuario > 0) {
-                        Precio precioPlu = precioDAOImpl.cargarPrecioPorPluYTienda(plu, tiendaUsuario);
-                        plataTotal = totalPeso * precioPlu.getPrecioPorKilo();
-                    } else {
-                        long precioPlu = precioDAOImpl.cargarPrecioPorPlu(plu);
-                        plataTotal = totalPeso * precioPlu;
-                    }
-                    String nombrePlu = dAOManager.getPluDAOImpl().cargar(plu).getNombreTextual();
-
-                    df.applyPattern("dd MMMM yyyy");
-                    sb.append("Durante ");
-                    sb.append(df.format(rangoA));
-                    sb.append(" y entre ");
-                    sb.append(df.format(rangoB));
-                    sb.append(" se obtuvieron los siguientes resultados \n");
-                    sb.append("Para el plu # ");
-                    sb.append(plu);
-                    sb.append(": ");
-                    sb.append(nombrePlu.trim());
-                    sb.append("\t Dinero vendido = $ ");
-                    sb.append(plataTotal / 1000);
-                    sb.append("\n\t Cantidad vendida = ");
-                    sb.append(totalPeso / 1000);
-                    sb.append(" kg.");
-                } else {
-                    //Sin fecha
-                    int plu = Integer.parseInt(numeroPlu);
-                    jTextField5.setText("");
-                    long totalPeso = ventaDAOImpl.cantidadVendidaPorNumeroPlu(plu);
-                    long plataTotal;
-                    if (tiendaUsuario > 0) {
-                        Precio precioPlu = precioDAOImpl.cargarPrecioPorPluYTienda(plu, tiendaUsuario);
-                        plataTotal = totalPeso * precioPlu.getPrecioPorKilo();
-                    } else {
-                        long precioPlu = precioDAOImpl.cargarPrecioPorPlu(plu);
-                        plataTotal = totalPeso * precioPlu;
-                    }
-                    String nombrePlu = dAOManager.getPluDAOImpl().cargar(plu).getNombreTextual();
-                    sb.append("Para el plu # ");
-                    sb.append(plu);
-                    sb.append(": ");
-                    sb.append(nombrePlu.trim());
-                    sb.append(" se obtuvieron los siguientes resultados \n");
-                    sb.append("\t Dinero vendido = $ ");
-                    sb.append(plataTotal / 1000);
-                    sb.append("\n\t Cantidad vendida = ");
-                    sb.append(totalPeso / 1000);
-                    sb.append(" kg.");
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Dato ingresado inválido", "", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        if (!numeroEscala.equals("")) {
-            try {
-                //Con fecha
-                if (!(rangoA == null)) {
-                    if (rangoB != null) {
-                        rangoB = jDateChooser2.getDate();
-                    } else {
-                        rangoB = new Date();
-                    }
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy/dd/MM");
-                    int escala = Integer.parseInt(numeroEscala);
-                    jTextField6.setText("");
-                    long plataTotal = movimientoDAOImpl.plataObtenidaPorNumeroEscalaYFecha(escala, df.format(rangoA), df.format(rangoB));
-                    df.applyPattern("dd MMMM yyyy");
-                    sb.append("Durante ");
-                    sb.append(df.format(rangoA));
-                    sb.append(" y entre ");
-                    sb.append(df.format(rangoB));
-                    sb.append(". Para la escala # ");
-                    sb.append(escala);
-                    sb.append(" se obtuvieron los siguientes resultados \n");
-                    sb.append("\t Dinero vendido = $ ");
-                    sb.append(plataTotal);
-                } else {
-                    //Sin fecha
-                    int escala = Integer.parseInt(numeroEscala);
-                    jTextField6.setText("");
-                    long plataTotal = movimientoDAOImpl.plataObtenidaPorNumeroEscala(escala);
-                    sb.append("Para la escala # ");
-                    sb.append(escala);
-                    sb.append(" se obtuvieron los siguientes resultados \n");
-                    sb.append("\t Dinero vendido = $ ");
-                    sb.append(plataTotal);
-                }
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Dato ingresado inválido", "", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        jDateChooser1.setDate(null);
-        jDateChooser2.setDate(null);
-        jDialogConsultas.setAlwaysOnTop(false);
-        jDialogConsultas.dispose();
-        if (sb.length() != 0) {
-            JOptionPane.showMessageDialog(this, sb, "", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     /**
      * *
      * Evento que genera la consolidación de los datos en el punto de venta que
@@ -1804,14 +1540,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         if (tiendaUsuario > 50 && tiendaUsuario < 99) {
             System.out.println("Comenzó");
             dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
-            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
 
             List<Movimiento> movimientos = dAOManager.getMovimientoDAOImpl().listar();
             List<Plu> plus = dAOManager.getPluDAOImpl().listar();
             List<Precio> precios = dAOManager.getPrecioDAOImpl().listar();
             List<Venta> ventas = dAOManager.getVentaDAOImpl().listar();
 
-            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
 
             dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
             for (Movimiento m : movimientos) {
@@ -1846,7 +1580,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             dAOManager.getVentaDAOImpl().commit();
             dAOManager.getVentaDAOImpl().cerrarSession();
 
-            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
             System.out.println("Termino");
         }
         System.out.println("Salta");
@@ -1861,19 +1594,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         if (tiendaUsuario == 99) {
             dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
-            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
 
             List<Integer> tiendasBD = dAOManager.getPuntoVentaDAOImpl().listaId();
 
             for (int tbd : tiendasBD) {
-                dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tbd);
 
                 List<Movimiento> movimientos = dAOManager.getMovimientoDAOImpl().listar();
                 List<Plu> plus = dAOManager.getPluDAOImpl().listar();
                 List<Precio> precios = dAOManager.getPrecioDAOImpl().listar();
                 List<Venta> ventas = dAOManager.getVentaDAOImpl().listar();
 
-                dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
 
                 dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
                 for (Movimiento m : movimientos) {
@@ -1909,7 +1639,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
             dAOManager.getVentaDAOImpl().cerrarSession();
 
-            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tiendaUsuario);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -1923,7 +1652,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         this.setVisible(true);
         this.setEnabled(true);
 
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(99);
         List<Integer> tiendas = dAOManager.getPuntoVentaDAOImpl().listaId();
         if (tiendas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay tiendas registradas", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -1980,6 +1708,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
             jLabelTienda.setText((tiendaUsuario < 0 || tiendaUsuario > 99) ? " No tiene punto de venta asociado " : "El punto de venta asociado es: " + tiendaUsuario);
             jLabelTipoUsuario.setText("El tipo de usuario que actualmente esta operando es: " + tipoUsuario);
+            jLabelNombreTienda.setText("Tienda actual: "+nombreTienda);
+            
             jPanelInformacionUsuario.setVisible(true);
         } else {
             ventanaInicio.setAlwaysOnTop(false);
@@ -1987,66 +1717,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             ventanaInicio.setAlwaysOnTop(true);
         }
     }//GEN-LAST:event_btnAcpetarActionPerformed
-
-    private void crearDatabase(DAOManager dAOManager, int bd) {
-        String tableMovimiento = "CREATE TABLE \"Movimiento\" (\n"
-                + "	\"idMovimiento\" INT NOT NULL,\n"
-                + "	\"cantidad\" INT NOT NULL,\n"
-                + "	\"codigoBarra\" VARCHAR(255) NULL,\n"
-                + "	\"escala\" INT NOT NULL,\n"
-                + "	\"fecha\" DATETIME NULL,\n"
-                + "	\"hora\" INT NOT NULL,\n"
-                + "	\"nombre\" VARCHAR(255) NULL,\n"
-                + "	\"pesoVenta\" INT NOT NULL,\n"
-                + "	\"plu\" INT NOT NULL,\n"
-                + "	\"precioKilo\" INT NOT NULL,\n"
-                + "	\"precioVenta\" INT NOT NULL,\n"
-                + "	PRIMARY KEY (\"idMovimiento\")\n"
-                + ");";
-        String tablePlu = "CREATE TABLE \"Plu\" (\n"
-                + "	\"idPlu\" INT NOT NULL,\n"
-                + "	\"codigoBarras\" VARCHAR(255) NULL,\n"
-                + "	\"nombreHex\" VARCHAR(255) NULL,\n"
-                + "	\"nombreTextual\" VARCHAR(255) NULL,\n"
-                + "	PRIMARY KEY (\"idPlu\")\n"
-                + ");";
-        String tablePrecio = "CREATE TABLE \"Precio\" (\n"
-                + "	\"precioPorKilo\" INT NOT NULL,\n"
-                + "	\"puntoVenta_idPuntoVenta\" INT NOT NULL,\n"
-                + "	\"plu_idPlu\" INT NOT NULL,\n"
-                + "	PRIMARY KEY (\"puntoVenta_idPuntoVenta\", \"plu_idPlu\")\n"
-                + ");";
-        String tablePuntoVenta = "CREATE TABLE \"PuntoVenta\" (\n"
-                + "	\"idPuntoVenta\" INT NOT NULL,\n"
-                + "	\"celular\" VARCHAR(255) NULL,\n"
-                + "	\"ciudad\" VARCHAR(255) NULL,\n"
-                + "	\"direccion\" VARCHAR(255) NULL,\n"
-                + "	\"directorioDefecto\" VARCHAR(255) NULL,\n"
-                + "	\"nombre\" VARCHAR(255) NULL,\n"
-                + "	\"telefono\" VARCHAR(255) NULL,\n"
-                + "	PRIMARY KEY (\"idPuntoVenta\")\n"
-                + ");";
-        String tableVenta = "CREATE TABLE \"Venta\" (\n"
-                + "	\"idVenta\" INT NOT NULL,\n"
-                + "	\"fecha\" DATETIME NULL,\n"
-                + "	\"pesoVenta\" INT NOT NULL,\n"
-                + "	\"plu_idPlu\" INT NULL,\n"
-                + "	\"puntoVenta_idPuntoVenta\" INT NULL,\n"
-                + "	PRIMARY KEY (\"idVenta\")\n"
-                + ");";
-        String sbd = "T" + bd;
-        HibernateDAOImpl hdaoi = dAOManager.getPuntoVentaDAOImpl();
-        hdaoi.iniciarTransaccion();
-        hdaoi.getCurrentSession().createSQLQuery("create database " + sbd).executeUpdate();
-        hdaoi.cambiarBaseDatos(bd);
-        hdaoi.getCurrentSession().createSQLQuery(tableMovimiento).executeUpdate();
-        hdaoi.getCurrentSession().createSQLQuery(tablePlu).executeUpdate();
-        hdaoi.getCurrentSession().createSQLQuery(tablePrecio).executeUpdate();
-        hdaoi.getCurrentSession().createSQLQuery(tablePuntoVenta).executeUpdate();
-        hdaoi.getCurrentSession().createSQLQuery(tableVenta).executeUpdate();
-        hdaoi.commit();
-        hdaoi.cerrarSession();
-    }
 
     private void hacerLogin() {
         jTextField1.setText("");
@@ -2114,7 +1784,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     escritorio.jPanelInformacionUsuario.setVisible(false);
                     escritorio.setEnabled(false);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión indicados, revisa la configuración del sistema : " + stateConnection, "\n Comunicate con el encargado", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión requerida, revisa la configuración del sistema : " + stateConnection, "\n Comunicate con el encargado", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -2128,8 +1798,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -2138,11 +1806,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCancelarCrearTienda;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBoxUsuarios;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JDialog jDialogCapturaPlu;
     private javax.swing.JDialog jDialogCargaCrearReporte;
-    private javax.swing.JDialog jDialogConsultas;
     private javax.swing.JDialog jDialogCrearTiendas;
     private javax.swing.JDialog jDialogCrearUsuarios;
     private javax.swing.JDialog jDialogVerMovimiento;
@@ -2153,9 +1818,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2174,6 +1836,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelNombreTienda;
     private javax.swing.JLabel jLabelTienda;
     private javax.swing.JLabel jLabelTipoUsuario;
     private javax.swing.JMenu jMenu1;
@@ -2181,8 +1844,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenu jMenuConsolidar;
     private javax.swing.JMenu jMenuImportar;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItemCapturarPlu;
@@ -2225,8 +1886,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
@@ -2235,7 +1894,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo2;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenu menuAyuda2;
-    private javax.swing.JMenu menuConsultas;
     private javax.swing.JMenuItem menuCrearUsuario;
     private javax.swing.JMenu menuHerramientas;
     private javax.swing.JMenuItem menuSalir;

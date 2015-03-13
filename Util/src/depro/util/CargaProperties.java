@@ -6,8 +6,7 @@
 package depro.util;
 
 /**
- * Clase encargada de cargar las propiedades del proyecto a través de
- * ISAMantenimiento.properties
+ * Clase encargada de cargar las propiedades del proyecto quality
  *
  * @author Jhunior
  */
@@ -22,12 +21,14 @@ import java.util.logging.Logger;
 public class CargaProperties {
 
     private final static String ESCALA_PUNTO_VENTA = "escala";
+    private final static String NOMBRE_TIENDA = "titulo";
     private static int escala = 99;
+    private static String titulo = "BIG";
     private static final String RUTA_PROPERTIES = "config/depro.properties";
 
     /**
      * Obtiene la propiedad del archivo de properties
-     * ISAMantenimiento.properties
+     * depro.properties
      *
      * @param nombrePropiedad
      * @return
@@ -45,8 +46,10 @@ public class CargaProperties {
         propiedades.load(new FileReader(archivoProperties));
 
         //Si el archivo de propiedades está vacio se crea la propiedad vacia
-        if (propiedades.isEmpty() || !(propiedades.containsKey(ESCALA_PUNTO_VENTA))) {
+        if (propiedades.isEmpty() || !(propiedades.containsKey(ESCALA_PUNTO_VENTA)) 
+                || !(propiedades.containsKey(NOMBRE_TIENDA))) {
             propiedades.setProperty(ESCALA_PUNTO_VENTA, "99");
+            propiedades.setProperty(NOMBRE_TIENDA, "BIG");
         }
 
         return propiedades;
@@ -54,12 +57,11 @@ public class CargaProperties {
 
     /**
      * *
-     * Obtener la duración mínima para los intervalos libres para generar una
-     * posible programación
+     * Obtener el punto de venta que se va a utilizar
      *
      * @return
      */
-    public int obtenerBaseDeDatos() {
+    public int obtenerEscala() {
         try {
             Properties properties = this.getProperties();
             if (properties.getProperty(ESCALA_PUNTO_VENTA, "99") != null) {
@@ -75,8 +77,27 @@ public class CargaProperties {
 
     /**
      * *
-     * Método para modificar la duración mínima de los intervalos libres de
-     * programación
+     * Obtener el nombre de la tienda actual
+     *
+     * @return
+     */
+    public String obtenerNombreTienda() {
+        try {
+            Properties properties = this.getProperties();
+            if (properties.getProperty(NOMBRE_TIENDA, "BIG") != null) {
+                titulo = properties.getProperty(NOMBRE_TIENDA, "BIG");
+                setNombreTienda(titulo);
+            }
+            return titulo;
+        } catch (Exception ex) {
+            Logger.getLogger(CargaProperties.class.getName()).log(Level.SEVERE, null, ex);
+            return "BIG";
+        }
+    }
+
+    /**
+     * *
+     * Método para modificar el punto de venta que esta siendo utilizado
      *
      * @param escala
      * @throws java.io.FileNotFoundException
@@ -94,9 +115,34 @@ public class CargaProperties {
         } else {
             properties.setProperty(ESCALA_PUNTO_VENTA, "99");
         }
-        properties.store(out, "Base de datos");
+        properties.store(out, "Quality");
         out.close();
         CargaProperties.escala = escala;
+    }
+
+    /**
+     * *
+     * Método para modificar el nombre de la tienda que se esta utilizando
+     *
+     * @param nombreTienda
+     * @throws java.io.FileNotFoundException
+     */
+    public void setNombreTienda(String nombreTienda) throws Exception {
+        FileInputStream in = new FileInputStream(RUTA_PROPERTIES);
+        Properties properties = this.getProperties();
+        properties.load(in);
+        in.close();
+
+        FileOutputStream out = new FileOutputStream(RUTA_PROPERTIES);
+        if ((properties.containsKey(NOMBRE_TIENDA))) {
+            properties.setProperty(NOMBRE_TIENDA, String.valueOf(nombreTienda));
+
+        } else {
+            properties.setProperty(NOMBRE_TIENDA, "BIG");
+        }
+        properties.store(out, "Quality");
+        out.close();
+        CargaProperties.titulo = nombreTienda;
     }
 
 }

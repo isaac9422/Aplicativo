@@ -36,7 +36,6 @@ public class GestorManagerTest {
         System.out.println("BD: #99");
         System.out.println(dAOManager.getPuntoVentaDAOImpl().listaId());
         System.out.println("BD: #89");
-        dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(89);
         System.out.println(dAOManager.getPuntoVentaDAOImpl().listaId());
         GestorManager.tienda = 52;
         instance.GestionarArchivoPlu(ruta);

@@ -26,7 +26,6 @@ public class GestorManager {
     public static int tienda;
 
     public void GestionarArchivoPlu(String ruta) throws IOException, Exception, NumberFormatException, NonUniqueObjectException {
-            dAOManager.getPuntoVentaDAOImpl().cambiarBaseDatos(tienda);
             ProcesadorArchivo procesadorArchivo = new ProcesadorArchivo(dAOManager);
             procesadorArchivo.ProcesarArchivo(ruta);
             copiarArchivoCarga(ruta);

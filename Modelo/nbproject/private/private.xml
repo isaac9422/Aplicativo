@@ -5,6 +5,8 @@
         <group name="Carniceria_Jhon"/>
         <group name="Main"/>
         <group name="ISA"/>
-        <group name="Depro"/>
+        <group name="Depro">
+            <file>file:/D:/Proyecto/Carnes/Modelo/src/depro/modelo/Utilidad.java</file>
+        </group>
     </open-files>
 </project-private>

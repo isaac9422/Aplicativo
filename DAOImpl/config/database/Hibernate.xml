@@ -29,6 +29,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
                 <value>depro.modelo.Plu</value>				
                 <value>depro.modelo.Precio</value>
                 <value>depro.modelo.Movimiento</value>
+                <value>depro.util.Utilidad</value>
             </list>
         </property>
     </bean>

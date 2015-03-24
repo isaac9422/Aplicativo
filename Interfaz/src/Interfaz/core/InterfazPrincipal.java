@@ -13,12 +13,14 @@ import depro.dao.VentaDAOImpl;
 import depro.dao.PuntoVentaDAOImpl;
 import depro.dao.DAOManager;
 import depro.dao.MovimientoDAOImpl;
+import depro.dao.UtilidadDAOImpl;
 import depro.gestorArchivo.GestorManager;
 import depro.modelo.Movimiento;
 import depro.modelo.Plu;
 import depro.modelo.Precio;
 import depro.modelo.PuntoVenta;
 import depro.modelo.Usuario;
+import depro.modelo.Utilidad;
 import depro.modelo.Venta;
 import depro.util.CargaProperties;
 import java.awt.HeadlessException;
@@ -119,9 +121,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         menuSalir2 = new javax.swing.JMenuItem();
         menuAyuda2 = new javax.swing.JMenu();
         itemAyuda2 = new javax.swing.JMenuItem();
-        jFileChooser1 = new javax.swing.JFileChooser();
-        jFileChooser2 = new javax.swing.JFileChooser();
-        jMenu1 = new javax.swing.JMenu();
+        jFileChooserArchivo = new javax.swing.JFileChooser();
+        jFileChooserDirectorio = new javax.swing.JFileChooser();
         jDialogCargaCrearReporte = new javax.swing.JDialog();
         jLabel22 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -181,10 +182,17 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jButton10 = new javax.swing.JButton();
+        jTextFieldRutaPorDefecto = new javax.swing.JTextField();
+        jButtonAceptarCrearTienda = new javax.swing.JButton();
         jButtonCancelarCrearTienda = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jDialogRutaPorTienda = new javax.swing.JDialog();
+        jButtonAceptarRuta = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabelRutaActual = new javax.swing.JLabel();
+        jTextFieldRutaTienda = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jPanelInformacionUsuario = new javax.swing.JPanel();
         jLabelTipoUsuario = new javax.swing.JLabel();
         jLabelTienda = new javax.swing.JLabel();
@@ -203,6 +211,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jMenuItemConsolidar = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuParametros = new javax.swing.JMenu();
+        jMenuItemRutaPorDefecto = new javax.swing.JMenuItem();
         jMenuVista = new javax.swing.JMenu();
         jMenuItemVerTiendas = new javax.swing.JMenuItem();
         jMenuItemVerPlu = new javax.swing.JMenuItem();
@@ -331,12 +341,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jFileChooser1.setCurrentDirectory(new java.io.File("D:\\Proyecto\\Carnes"));
+        jFileChooserArchivo.setCurrentDirectory(new java.io.File("D:\\Proyecto\\Carnes"));
 
-        jFileChooser2.setCurrentDirectory(new java.io.File("C:\\"));
-            jFileChooser2.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-
-            jMenu1.setText("jMenu1");
+        jFileChooserDirectorio.setCurrentDirectory(new java.io.File("C:\\"));
+            jFileChooserDirectorio.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
             jDialogCargaCrearReporte.setMinimumSize(new java.awt.Dimension(460, 170));
 
@@ -852,12 +860,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             jLabel21.setText("Ruta por defecto");
             jPanel2.add(jLabel21);
-            jPanel2.add(jTextField13);
+            jPanel2.add(jTextFieldRutaPorDefecto);
 
-            jButton10.setText("Aceptar");
-            jButton10.addActionListener(new java.awt.event.ActionListener() {
+            jButtonAceptarCrearTienda.setText("Aceptar");
+            jButtonAceptarCrearTienda.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton10ActionPerformed(evt);
+                    jButtonAceptarCrearTiendaActionPerformed(evt);
                 }
             });
 
@@ -890,7 +898,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jDialogCrearTiendasLayout.createSequentialGroup()
                             .addGap(66, 66, 66)
-                            .addComponent(jButton10)
+                            .addComponent(jButtonAceptarCrearTienda)
                             .addGap(43, 43, 43)
                             .addComponent(jButtonCancelarCrearTienda)))
                     .addContainerGap(13, Short.MAX_VALUE))
@@ -905,8 +913,66 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jDialogCrearTiendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButtonCancelarCrearTienda)
-                        .addComponent(jButton10))
+                        .addComponent(jButtonAceptarCrearTienda))
                     .addContainerGap())
+            );
+
+            jButtonAceptarRuta.setText("Aceptar");
+            jButtonAceptarRuta.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonAceptarRutaActionPerformed(evt);
+                }
+            });
+
+            jLabel9.setText("Ruta actual:");
+
+            jLabel10.setText("Ruta escogida");
+
+            jTextFieldRutaTienda.setEditable(false);
+
+            jButton4.setText("....");
+            jButton4.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton4ActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jDialogRutaPorTiendaLayout = new javax.swing.GroupLayout(jDialogRutaPorTienda.getContentPane());
+            jDialogRutaPorTienda.getContentPane().setLayout(jDialogRutaPorTiendaLayout);
+            jDialogRutaPorTiendaLayout.setHorizontalGroup(
+                jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogRutaPorTiendaLayout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel10))
+                    .addGap(18, 18, 18)
+                    .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextFieldRutaTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                        .addComponent(jLabelRutaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jDialogRutaPorTiendaLayout.createSequentialGroup()
+                    .addContainerGap(100, Short.MAX_VALUE)
+                    .addComponent(jButtonAceptarRuta)
+                    .addContainerGap(100, Short.MAX_VALUE))
+            );
+            jDialogRutaPorTiendaLayout.setVerticalGroup(
+                jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogRutaPorTiendaLayout.createSequentialGroup()
+                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabelRutaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(24, 24, 24)
+                    .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(jTextFieldRutaTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                    .addComponent(jButtonAceptarRuta)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1001,6 +1067,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             menuHerramientas.add(jMenuImportar);
 
             jMenuConsolidar.setText("Consolidar");
+            jMenuConsolidar.setEnabled(false);
 
             jMenuItemConsolidar.setText("Sesión actual");
             jMenuItemConsolidar.addActionListener(new java.awt.event.ActionListener() {
@@ -1022,6 +1089,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             jMenuConsolidar.add(jMenuItem4);
 
             menuHerramientas.add(jMenuConsolidar);
+
+            jMenuParametros.setText("Parámetros");
+
+            jMenuItemRutaPorDefecto.setText("Ruta por defecto");
+            jMenuItemRutaPorDefecto.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItemRutaPorDefectoActionPerformed(evt);
+                }
+            });
+            jMenuParametros.add(jMenuItemRutaPorDefecto);
+
+            menuHerramientas.add(jMenuParametros);
 
             jMenuBar1.add(menuHerramientas);
 
@@ -1207,8 +1286,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (jFileChooser1.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
-            jTextFieldRutaPlu.setText(jFileChooser1.getSelectedFile().getPath());
+        if (jFileChooserArchivo.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            jTextFieldRutaPlu.setText(jFileChooserArchivo.getSelectedFile().getPath());
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1345,7 +1424,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      *
      * @param evt
      */
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void jButtonAceptarCrearTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarCrearTiendaActionPerformed
         int idTienda = Integer.parseInt(jTextField7.getText());
         String nombre = jTextField8.getText();
         String direccion = jTextField9.getText();
@@ -1363,10 +1442,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             puntoVenta.setIdPuntoVenta(idTienda);
             puntoVenta.setNombre(nombre);
             puntoVenta.setTelefono(telefono);
-            if (jTextField13.getText().equals("")) {
+            if (jTextFieldRutaPorDefecto.getText().equals("")) {
                 puntoVenta.setDirectorioDefecto("C:\\");
             } else {
-                puntoVenta.setDirectorioDefecto(jTextField13.getText());
+                puntoVenta.setDirectorioDefecto(jTextFieldRutaPorDefecto.getText());
             }
             puntoVentaDAOImpl.guardar(puntoVenta);
             puntoVentaDAOImpl.commit();
@@ -1381,7 +1460,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Esta tienda ya se encuentra registrada", "", JOptionPane.WARNING_MESSAGE);
             jDialogCrearTiendas.dispose();
         }
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_jButtonAceptarCrearTiendaActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         PuntoVentaDAOImpl pvdaoi = dAOManager.getPuntoVentaDAOImpl();
@@ -1419,8 +1498,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        if (jFileChooser2.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
-            jTextField13.setText(jFileChooser2.getSelectedFile().getPath());
+        if (jFileChooserDirectorio.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            jTextFieldRutaPorDefecto.setText(jFileChooserDirectorio.getSelectedFile().getPath());
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -1546,7 +1625,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             List<Precio> precios = dAOManager.getPrecioDAOImpl().listar();
             List<Venta> ventas = dAOManager.getVentaDAOImpl().listar();
 
-
             dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
             for (Movimiento m : movimientos) {
                 if (dAOManager.getMovimientoDAOImpl().cargar(m.getIdMovimiento()) == null) {
@@ -1603,7 +1681,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 List<Plu> plus = dAOManager.getPluDAOImpl().listar();
                 List<Precio> precios = dAOManager.getPrecioDAOImpl().listar();
                 List<Venta> ventas = dAOManager.getVentaDAOImpl().listar();
-
 
                 dAOManager.getMovimientoDAOImpl().iniciarTransaccion();
                 for (Movimiento m : movimientos) {
@@ -1708,8 +1785,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
             jLabelTienda.setText((tiendaUsuario < 0 || tiendaUsuario > 99) ? " No tiene punto de venta asociado " : "El punto de venta asociado es: " + tiendaUsuario);
             jLabelTipoUsuario.setText("El tipo de usuario que actualmente esta operando es: " + tipoUsuario);
-            jLabelNombreTienda.setText("Tienda actual: "+nombreTienda);
-            
+            jLabelNombreTienda.setText("Tienda actual: " + nombreTienda);
+
             jPanelInformacionUsuario.setVisible(true);
         } else {
             ventanaInicio.setAlwaysOnTop(false);
@@ -1717,6 +1794,44 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             ventanaInicio.setAlwaysOnTop(true);
         }
     }//GEN-LAST:event_btnAcpetarActionPerformed
+
+    private void jMenuItemRutaPorDefectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRutaPorDefectoActionPerformed
+        UtilidadDAOImpl utilidadDAOImpl = dAOManager.getUtilidadDAOImpl();
+        Utilidad u = utilidadDAOImpl.cargar(tiendaUsuario);
+        if (u == null) {
+            jLabelRutaActual.setText("");
+        } else {
+            jLabelRutaActual.setText(u.getRutaPorDefecto());
+        }
+        jDialogRutaPorTienda.setLocationRelativeTo(this);
+        jDialogRutaPorTienda.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRutaPorDefectoActionPerformed
+
+    private void jButtonAceptarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarRutaActionPerformed
+        if (!jTextFieldRutaTienda.getText().equalsIgnoreCase("")) {
+            String ruta = jTextFieldRutaTienda.getText();
+            Utilidad u = new Utilidad();
+            UtilidadDAOImpl utilidadDAOImpl = dAOManager.getUtilidadDAOImpl();
+            utilidadDAOImpl.iniciarTransaccion();
+            u.setIdPuntoVenta(tiendaUsuario);
+            u.setRutaPorDefecto(ruta);
+            if (utilidadDAOImpl.cargar(tiendaUsuario) == null) {
+                utilidadDAOImpl.guardar(u);
+            } else {
+                utilidadDAOImpl.actualizar(u);
+            }
+            utilidadDAOImpl.commit();
+            utilidadDAOImpl.cerrarSession();
+            jFileChooserArchivo.setCurrentDirectory(new java.io.File(ruta));
+        }
+        jDialogRutaPorTienda.dispose();
+    }//GEN-LAST:event_jButtonAceptarRutaActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (jFileChooserDirectorio.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            jTextFieldRutaTienda.setText(jFileChooserDirectorio.getSelectedFile().getPath());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void hacerLogin() {
         jTextField1.setText("");
@@ -1795,14 +1910,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemAyuda;
     private javax.swing.JMenuItem itemAyuda2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonAceptarCrearTienda;
+    private javax.swing.JButton jButtonAceptarRuta;
     private javax.swing.JButton jButtonCancelarCrearTienda;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBoxUsuarios;
@@ -1810,14 +1927,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog jDialogCargaCrearReporte;
     private javax.swing.JDialog jDialogCrearTiendas;
     private javax.swing.JDialog jDialogCrearUsuarios;
+    private javax.swing.JDialog jDialogRutaPorTienda;
     private javax.swing.JDialog jDialogVerMovimiento;
     private javax.swing.JDialog jDialogVerPlus;
     private javax.swing.JDialog jDialogVerPrecios;
     private javax.swing.JDialog jDialogVerTiendas;
     private javax.swing.JDialog jDialogVerVentas;
-    private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JFileChooser jFileChooser2;
+    private javax.swing.JFileChooser jFileChooserArchivo;
+    private javax.swing.JFileChooser jFileChooserDirectorio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1836,10 +1955,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelNombreTienda;
+    private javax.swing.JLabel jLabelRutaActual;
     private javax.swing.JLabel jLabelTienda;
     private javax.swing.JLabel jLabelTipoUsuario;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenu jMenuConsolidar;
@@ -1852,11 +1972,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemReporteEscala;
     private javax.swing.JMenuItem jMenuItemReporteFecha;
     private javax.swing.JMenuItem jMenuItemReportePlu;
+    private javax.swing.JMenuItem jMenuItemRutaPorDefecto;
     private javax.swing.JMenuItem jMenuItemVerMovimiento;
     private javax.swing.JMenuItem jMenuItemVerPlu;
     private javax.swing.JMenuItem jMenuItemVerPrecios;
     private javax.swing.JMenuItem jMenuItemVerTiendas;
     private javax.swing.JMenuItem jMenuItemVerVentas;
+    private javax.swing.JMenu jMenuParametros;
     private javax.swing.JMenu jMenuReporte;
     private javax.swing.JMenu jMenuVista;
     private javax.swing.JPanel jPanel1;
@@ -1882,7 +2004,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -1890,6 +2011,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextFieldRutaPlu;
+    private javax.swing.JTextField jTextFieldRutaPorDefecto;
+    private javax.swing.JTextField jTextFieldRutaTienda;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuArchivo2;
     private javax.swing.JMenu menuAyuda;

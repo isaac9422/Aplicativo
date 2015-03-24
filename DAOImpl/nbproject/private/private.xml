@@ -3,6 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ISA"/>
-        <group name="Depro"/>
+        <group name="Depro">
+            <file>file:/D:/Proyecto/Carnes/DAOImpl/config/database/Hibernate.xml</file>
+        </group>
     </open-files>
 </project-private>

@@ -24,11 +24,17 @@ public class GestorManager {
 
     private DAOManager dAOManager;
     public static int tienda;
+    public static long cantidadDuplicados;
+    public static long diferenciaDuplicados;
 
     public void GestionarArchivoPlu(String ruta) throws IOException, Exception, NumberFormatException, NonUniqueObjectException {
-            ProcesadorArchivo procesadorArchivo = new ProcesadorArchivo(dAOManager);
-            procesadorArchivo.ProcesarArchivo(ruta);
+        ProcesadorArchivo procesadorArchivo = new ProcesadorArchivo(dAOManager);
+        cantidadDuplicados = procesadorArchivo.contarDuplicados();
+        long cantidadRegistros = procesadorArchivo.procesarArchivo(ruta);
+        diferenciaDuplicados = procesadorArchivo.contarDuplicados() - cantidadDuplicados;
+        if (cantidadRegistros - diferenciaDuplicados > 5) {
             copiarArchivoCarga(ruta);
+        }
     }
 
     /**

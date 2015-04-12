@@ -10,7 +10,9 @@ import depro.dao.PrecioDAOImpl;
 import depro.dao.PuntoVentaDAOImpl;
 import depro.dao.VentaDAOImpl;
 import depro.dao.DAOManager;
+import depro.dao.DuplicadoDAOImpl;
 import depro.dao.MovimientoDAOImpl;
+import depro.modelo.Duplicado;
 import depro.modelo.Movimiento;
 import depro.modelo.Plu;
 import depro.modelo.Precio;
@@ -31,31 +33,36 @@ import java.util.StringTokenizer;
  */
 public class ProcesadorArchivo {
 
-    private DAOManager dAOManager;
+    private DAOManager dao;
     private List<Venta> ventas;
     private List<PuntoVenta> puntoVentas;
     private List<Plu> plus;
     private List<Precio> precios;
+    private List<Movimiento> duplicados;
 
     public ProcesadorArchivo(DAOManager dAOManager) {
-        this.dAOManager = dAOManager;
+        this.dao = dAOManager;
         this.ventas = new ArrayList<>();
         this.plus = new ArrayList<>();
         this.precios = new ArrayList<>();
         this.puntoVentas = new ArrayList<>();
+        this.duplicados = new ArrayList<>();
     }
 
-    public void ProcesarArchivo(String ruta) throws IOException, Exception, NumberFormatException {
+    public long procesarArchivo(String ruta) throws IOException, Exception, NumberFormatException {
+        long registros = 0;
         BufferedReader br = new BufferedReader(new FileReader(ruta));
         String linea;
-        VentaDAOImpl ventaDAOImpl = dAOManager.getVentaDAOImpl();
-        PluDAOImpl pluDAOImpl = dAOManager.getPluDAOImpl();
-        PuntoVentaDAOImpl puntoVentaDAOImpl = dAOManager.getPuntoVentaDAOImpl();
-        PrecioDAOImpl precioDAOImpl = dAOManager.getPrecioDAOImpl();
-        MovimientoDAOImpl movimientoDAOImpl = dAOManager.getMovimientoDAOImpl();
+        VentaDAOImpl ventaDAOImpl = dao.getVentaDAOImpl();
+        PluDAOImpl pluDAOImpl = dao.getPluDAOImpl();
+        PuntoVentaDAOImpl puntoVentaDAOImpl = dao.getPuntoVentaDAOImpl();
+        PrecioDAOImpl precioDAOImpl = dao.getPrecioDAOImpl();
+        MovimientoDAOImpl movimientoDAOImpl = dao.getMovimientoDAOImpl();
+        DuplicadoDAOImpl duplicadoDAOImpl = dao.getDuplicadoDAOImpl();
         br.readLine();
         movimientoDAOImpl.iniciarTransaccion();
         while ((linea = br.readLine()) != null) {
+            registros++;
             StringTokenizer token = new StringTokenizer(linea);
             Venta venta = new Venta();
             Plu plu = new Plu();
@@ -123,25 +130,12 @@ public class ProcesadorArchivo {
                         venta.setFecha(d);
                         movimiento.setHora((hora * 100) + minuto);
                         break;
-//                    Case para cuando se va a leer la escala desde archivo    
-//                    case 12:
-//                        int idPuntoVenta = Integer.parseInt(campo);
-//                        movimiento.setEscala(idPuntoVenta);
-//                        PuntoVenta pv = puntoVentaDAOImpl.cargar(idPuntoVenta);
-//                        if (pv != null) {
-//                            precio.setPuntoVenta(pv);
-//                            venta.setPuntoVenta(pv);
-//                        } else {
-//                            puntoVenta.setIdPuntoVenta(idPuntoVenta);
-//                            precio.setPuntoVenta(puntoVenta);
-//                            venta.setPuntoVenta(puntoVenta);
-//                            puntoVentas.add(puntoVenta);
-//                        }
-//                        break;
 //                      Case para asociar la información capturada con la escala de la sesión actual  
                     case 12:
                         int idPuntoVenta = GestorManager.tienda;
-                        movimiento.setEscala(idPuntoVenta);
+                        int tienda = Integer.parseInt(campo);
+                        movimiento.setEscala(tienda);
+                        movimiento.setTienda(idPuntoVenta);
                         PuntoVenta pv = puntoVentaDAOImpl.cargar(idPuntoVenta);
                         if (pv != null) {
                             puntoVenta.setIdPuntoVenta(idPuntoVenta);
@@ -188,12 +182,12 @@ public class ProcesadorArchivo {
                 movimientoDAOImpl.guardar(movimiento);
             } else {
                 if (m.getCantidad() == 0) {
-                    movimientoDAOImpl.eliminar(m);
-                    movimientoDAOImpl.guardar(movimiento);
+                    m.setCantidad(movimiento.getCantidad());
+                    movimientoDAOImpl.actualizar(m);
                 } else if (m.getPesoVenta() == 0) {
-                    movimientoDAOImpl.eliminar(m);
-                    movimientoDAOImpl.guardar(movimiento);
-                } else if (!(m.getFecha().equals(movimiento.getFecha()))) {
+                    m.setPesoVenta(movimiento.getPrecioVenta());
+                    movimientoDAOImpl.actualizar(m);
+                } else if (m.getFecha().getTime()!=movimiento.getFecha().getTime()) {
                     boolean flag = true;
                     int idM = movimiento.getIdMovimiento();
                     do {
@@ -202,6 +196,17 @@ public class ProcesadorArchivo {
                     } while (flag);
                     movimiento.setIdMovimiento(idM);
                     movimientoDAOImpl.guardar(movimiento);
+                } else if(m.getHora()!=movimiento.getHora()){
+                    boolean flag = true;
+                    int idM = movimiento.getIdMovimiento();
+                    do {
+                        idM += 9999;
+                        flag = (movimientoDAOImpl.cargar(idM) != null);
+                    } while (flag);
+                    movimiento.setIdMovimiento(idM);
+                    movimientoDAOImpl.guardar(movimiento);
+                }else{
+                    duplicados.add(movimiento);
                 }
             }
         }
@@ -258,5 +263,21 @@ public class ProcesadorArchivo {
         }
         precioDAOImpl.commit();
         precioDAOImpl.cerrarSession();
+        
+        duplicadoDAOImpl.iniciarTransaccion();
+        for(Movimiento m:duplicados){
+            Duplicado dup = duplicadoDAOImpl.cargar(m.getIdMovimiento());
+            if(dup == null){
+                duplicadoDAOImpl.guardar(new Duplicado(m));
+            }
+        }
+        duplicadoDAOImpl.commit();
+        duplicadoDAOImpl.cerrarSession();
+        return registros;
+    }
+
+    public long contarDuplicados() {
+        DuplicadoDAOImpl duplicadoDAOImpl = dao.getDuplicadoDAOImpl();
+        return duplicadoDAOImpl.cuantos();
     }
 }

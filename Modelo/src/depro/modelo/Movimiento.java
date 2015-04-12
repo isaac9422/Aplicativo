@@ -30,6 +30,7 @@ public class Movimiento implements Serializable {
     private int escala;
     private String codigoBarra;
     private String nombre;
+    private int tienda;
 
     /**
      * @return the idMovimiento
@@ -184,6 +185,20 @@ public class Movimiento implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the tienda
+     */
+    public int getTienda() {
+        return tienda;
+    }
+
+    /**
+     * @param tienda the tienda to set
+     */
+    public void setTienda(int tienda) {
+        this.tienda = tienda;
     }
     
     

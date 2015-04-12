@@ -17,6 +17,7 @@ public class DAOManager {
     private UsuarioDAOImpl usuarioDAOImpl;
     private MovimientoDAOImpl movimientoDAOImpl;
     private UtilidadDAOImpl utilidadDAOImpl;
+    private DuplicadoDAOImpl duplicadoDAOImpl;
     
     public DAOManager(){
         this.pluDAOImpl = new PluDAOImpl();
@@ -26,6 +27,7 @@ public class DAOManager {
         this.precioDAOImpl = new PrecioDAOImpl();
         this.movimientoDAOImpl = new MovimientoDAOImpl();
         this.utilidadDAOImpl = new UtilidadDAOImpl();
+        this.duplicadoDAOImpl = new DuplicadoDAOImpl();
     }
 
     /**
@@ -75,5 +77,12 @@ public class DAOManager {
      */
     public UtilidadDAOImpl getUtilidadDAOImpl() {
         return utilidadDAOImpl;
+    }
+
+    /**
+     * @return the duplicadoDAOImpl
+     */
+    public DuplicadoDAOImpl getDuplicadoDAOImpl() {
+        return duplicadoDAOImpl;
     }
 }

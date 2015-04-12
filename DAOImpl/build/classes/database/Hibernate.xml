@@ -29,7 +29,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
                 <value>depro.modelo.Plu</value>				
                 <value>depro.modelo.Precio</value>
                 <value>depro.modelo.Movimiento</value>
-                <value>depro.util.Utilidad</value>
+                <value>depro.modelo.Duplicado</value>
+                <value>depro.modelo.Utilidad</value>
+                <value>depro.util.CargaProperties</value>
             </list>
         </property>
     </bean>

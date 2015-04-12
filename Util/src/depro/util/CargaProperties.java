@@ -20,11 +20,13 @@ import java.util.logging.Logger;
 
 public class CargaProperties {
 
+    private final static String RUTA_PROPERTIES = "config/depro.properties";
     private final static String ESCALA_PUNTO_VENTA = "escala";
     private final static String NOMBRE_TIENDA = "titulo";
+    private final static String RUTA_POR_DEFECTO = "rutaCarga";
     private static int escala = 99;
     private static String titulo = "BIG";
-    private static final String RUTA_PROPERTIES = "config/depro.properties";
+    private static String rutaCarga = "C:\\";
 
     /**
      * Obtiene la propiedad del archivo de properties
@@ -96,6 +98,22 @@ public class CargaProperties {
     }
 
     /**
+     * @return the rutaCarga
+     */
+    public String getRutaCarga() {
+        try {
+            Properties properties = this.getProperties();
+            if (properties.getProperty(RUTA_POR_DEFECTO, "C:\\") != null) {
+                rutaCarga = properties.getProperty(RUTA_POR_DEFECTO, "C:\\");
+            }
+            return rutaCarga;
+        } catch (Exception ex) {
+            Logger.getLogger(CargaProperties.class.getName()).log(Level.SEVERE, null, ex);
+            return "C:\\";
+        }
+    }
+
+    /**
      * *
      * Método para modificar el punto de venta que esta siendo utilizado
      *
@@ -143,6 +161,31 @@ public class CargaProperties {
         properties.store(out, "Quality");
         out.close();
         CargaProperties.titulo = nombreTienda;
+    }
+
+    /**
+     * *
+     * Método para modificar la ruta de la tienda que se esta utilizando
+     *
+     * @param rutaTienda
+     * @throws java.io.FileNotFoundException
+     */
+    public void setRutaTienda(String rutaTienda) throws Exception {
+        FileInputStream in = new FileInputStream(RUTA_PROPERTIES);
+        Properties properties = this.getProperties();
+        properties.load(in);
+        in.close();
+
+        FileOutputStream out = new FileOutputStream(RUTA_PROPERTIES);
+        if ((properties.containsKey(RUTA_POR_DEFECTO))) {
+            properties.setProperty(RUTA_POR_DEFECTO, String.valueOf(rutaTienda));
+
+        } else {
+            properties.setProperty(RUTA_POR_DEFECTO, "C:\\");
+        }
+        properties.store(out, "Quality");
+        out.close();
+        CargaProperties.rutaCarga = rutaTienda;
     }
 
 }

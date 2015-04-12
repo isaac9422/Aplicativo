@@ -54,7 +54,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private static int tiendaUsuario;
     private static String tipoUsuario = "No hay usuario conectado";
     private static int stateConnection = 0;
-    private static String directorioUsuario;
     private CargaProperties lectorProperties;
     private String nombreTienda;
 
@@ -65,13 +64,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         dAOManager = new DAOManager();
         gestorManager = new GestorManager();
         gestorManager.setDAOManager(dAOManager);
-        directorioUsuario = "C:\\";
         lectorProperties = new CargaProperties();
         tiendaUsuario = lectorProperties.obtenerEscala();
         nombreTienda = lectorProperties.obtenerNombreTienda();
         initComponents();
         llenarComboBoxUsuario();
         setTitle(nombreTienda);
+        jFileChooserArchivo.setCurrentDirectory(new java.io.File(lectorProperties.getRutaCarga()));
     }
 
     /**
@@ -187,12 +186,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jButtonCancelarCrearTienda = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jDialogRutaPorTienda = new javax.swing.JDialog();
-        jButtonAceptarRuta = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabelRutaActual = new javax.swing.JLabel();
         jTextFieldRutaTienda = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jButtonAceptarRuta = new javax.swing.JButton();
         jPanelInformacionUsuario = new javax.swing.JPanel();
         jLabelTipoUsuario = new javax.swing.JLabel();
         jLabelTienda = new javax.swing.JLabel();
@@ -917,18 +916,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addContainerGap())
             );
 
-            jButtonAceptarRuta.setText("Aceptar");
-            jButtonAceptarRuta.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButtonAceptarRutaActionPerformed(evt);
-                }
-            });
+            jDialogRutaPorTienda.setMinimumSize(new java.awt.Dimension(300, 150));
+            jDialogRutaPorTienda.setResizable(false);
 
             jLabel9.setText("Ruta actual:");
 
             jLabel10.setText("Ruta escogida");
 
             jTextFieldRutaTienda.setEditable(false);
+            jTextFieldRutaTienda.setDoubleBuffered(true);
+            jTextFieldRutaTienda.setDragEnabled(true);
 
             jButton4.setText("....");
             jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -937,42 +934,49 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 }
             });
 
+            jButtonAceptarRuta.setText("Aceptar");
+            jButtonAceptarRuta.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonAceptarRutaActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jDialogRutaPorTiendaLayout = new javax.swing.GroupLayout(jDialogRutaPorTienda.getContentPane());
             jDialogRutaPorTienda.getContentPane().setLayout(jDialogRutaPorTiendaLayout);
             jDialogRutaPorTiendaLayout.setHorizontalGroup(
                 jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogRutaPorTiendaLayout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jDialogRutaPorTiendaLayout.createSequentialGroup()
+                    .addContainerGap(22, Short.MAX_VALUE)
                     .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel9)
                         .addComponent(jLabel10))
                     .addGap(18, 18, 18)
                     .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextFieldRutaTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                        .addComponent(jLabelRutaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelRutaActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldRutaTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(22, Short.MAX_VALUE))
                 .addGroup(jDialogRutaPorTiendaLayout.createSequentialGroup()
-                    .addContainerGap(100, Short.MAX_VALUE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonAceptarRuta)
-                    .addContainerGap(100, Short.MAX_VALUE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
             jDialogRutaPorTiendaLayout.setVerticalGroup(
                 jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogRutaPorTiendaLayout.createSequentialGroup()
-                    .addContainerGap(19, Short.MAX_VALUE)
-                    .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabelRutaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(24, 24, 24)
+                    .addContainerGap(12, Short.MAX_VALUE)
+                    .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelRutaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addGap(18, 18, 18)
                     .addGroup(jDialogRutaPorTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
-                        .addComponent(jTextFieldRutaTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldRutaTienda)
                         .addComponent(jButton4))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                    .addGap(20, 20, 20)
                     .addComponent(jButtonAceptarRuta)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(15, 15, 15))
             );
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1308,7 +1312,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 try {
                     GestorManager.tienda = tiendaUsuario;
                     gestorManager.GestionarArchivoPlu(ruta);
-                    JOptionPane.showMessageDialog(null, "Archivo cargado", "", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Archivo cargado", "Exito", JOptionPane.PLAIN_MESSAGE);
+                    if (GestorManager.diferenciaDuplicados != 0) {
+                        JOptionPane.showMessageDialog(null, "Se encontraron  " + GestorManager.diferenciaDuplicados + "  registros duplicados", "Exito", JOptionPane.PLAIN_MESSAGE);
+                    }
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "No se pudo realizar la solicitud", "", JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -1818,11 +1825,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             if (utilidadDAOImpl.cargar(tiendaUsuario) == null) {
                 utilidadDAOImpl.guardar(u);
             } else {
+                u = utilidadDAOImpl.cargar(tiendaUsuario);
+                u.setRutaPorDefecto(ruta);
                 utilidadDAOImpl.actualizar(u);
             }
             utilidadDAOImpl.commit();
             utilidadDAOImpl.cerrarSession();
             jFileChooserArchivo.setCurrentDirectory(new java.io.File(ruta));
+            try {
+                lectorProperties.setRutaTienda(ruta);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se puedo parsear la ruta", "Error", JOptionPane.ERROR);
+            }
         }
         jDialogRutaPorTienda.dispose();
     }//GEN-LAST:event_jButtonAceptarRutaActionPerformed

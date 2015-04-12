@@ -1,0 +1,45 @@
+ LPARAMETERS cla_, llave_, desem_
+ LOCAL caralf, cardes, carkey1, carkey2, carkey3, carkey4, llavedef, i, car, npos, rpta
+ IF EMPTY(llave_)
+    RETURN
+ ENDIF
+ caralf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+ cardes = 'KEF9BCMTS3AYG75V01IH8PU6LXQRJ4OZWN2D'
+ carkey1 = cardes
+ carkey2 = cardes
+ carkey3 = cardes
+ carkey4 = cardes
+ npos1 = AT(SUBSTR(llave_, 1, 1), caralf)
+ npos2 = AT(SUBSTR(llave_, 2, 1), caralf)
+ npos3 = AT(SUBSTR(llave_, 3, 1), caralf)
+ npos4 = AT(SUBSTR(llave_, 4, 1), caralf)
+ IF npos1>1
+    carkey1 = SUBSTR(carkey1, npos1, 37-npos1)+SUBSTR(carkey1, 1, npos1-1)
+ ENDIF
+ IF npos2>1
+    carkey2 = SUBSTR(carkey2, npos2, 37-npos2)+SUBSTR(carkey2, 1, npos2-1)
+ ENDIF
+ IF npos3>1
+    carkey3 = SUBSTR(carkey3, npos3, 37-npos3)+SUBSTR(carkey3, 1, npos3-1)
+ ENDIF
+ IF npos4>1
+    carkey4 = SUBSTR(carkey4, npos4, 37-npos4)+SUBSTR(carkey4, 1, npos4-1)
+ ENDIF
+ IF desem_
+    rpta = kriptar(cla_, .T.)
+    rpta = CHRTRAN(rpta, carkey4, caralf)
+    rpta = CHRTRAN(rpta, carkey3, caralf)
+    rpta = CHRTRAN(rpta, carkey2, caralf)
+    rpta = CHRTRAN(rpta, carkey1, caralf)
+    rpta = CHRTRAN(rpta, cardes, caralf)
+ ELSE
+    rpta = CHRTRAN(cla_, caralf, cardes)
+    rpta = CHRTRAN(rpta, caralf, carkey1)
+    rpta = CHRTRAN(rpta, caralf, carkey2)
+    rpta = CHRTRAN(rpta, caralf, carkey3)
+    rpta = CHRTRAN(rpta, caralf, carkey4)
+    RETURN kriptar(rpta)
+ ENDIF
+ RETURN rpta
+ENDFUNC
+

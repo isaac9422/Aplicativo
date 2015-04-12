@@ -1,0 +1,57 @@
+LPARAMETERS cla_, desem_
+ caracteres = 'KEF9BCMTS3AYG75V01IHUP6XLZQR2J4OWN8D'
+ IF desem_
+    RETURN desencriptar(cla_)
+ ELSE
+    RETURN encriptar(cla_)
+ ENDIF
+ENDFUNC
+**
+FUNCTION Encriptar
+ LPARAMETERS clave_
+ LOCAL lar, i, charfact, rpta
+ clave_ = UPPER(ALLTRIM(clave_))
+ charfact = RIGHT(SYS(2015), 1)
+ rpta = charfact
+ lar = LEN(clave_)
+ FOR i = 1 TO lar
+    rpta = rpta+convertir(SUBSTR(clave_, i, 1), ASC(charfact)+i)
+ ENDFOR
+ RETURN rpta
+ENDFUNC
+**
+FUNCTION DesEncriptar
+ LPARAMETERS clave_
+ LOCAL lar, i, charfact, rpta
+ clave_ = ALLTRIM(clave_)
+ charfact = LEFT(clave_, 1)
+ lar = LEN(clave_)
+ rpta = ''
+ FOR i = 2 TO lar
+    rpta = rpta+convertir(SUBSTR(clave_, i, 1), (ASC(charfact)+i-1)*-1)
+ ENDFOR
+ RETURN rpta
+ENDFUNC
+**
+FUNCTION Convertir
+ LPARAMETERS car_, fact_
+ LOCAL i, j, posico, posicd
+ IF MOD(ABS(m.fact_), 36)=0
+    RETURN m.car_
+ ENDIF
+ m.car_ = UPPER(m.car_)
+ m.posico = AT(m.car_, m.caracteres)
+ IF m.posico=0
+    RETURN m.car_
+ ELSE
+    IF m.fact_>0
+       m.posicd = MOD(m.posico+m.fact_, 36)
+    ELSE
+       m.posicd = m.posico-MOD(ABS(m.fact_), 36)
+    ENDIF
+ ENDIF
+ IF m.posicd<=0
+    m.posicd = 36+m.posicd
+ ENDIF
+ RETURN SUBSTR(m.caracteres, m.posicd, 1)
+ENDFUNC
